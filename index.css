@@ -10,3 +10,7 @@ h2 {
 p {
   color: #4E3669;
 }
+
+.anchorjs-link {
+  display: none !Important;
+}
