@@ -1,9 +1,12 @@
 body {
-  background-color: powderblue;
+  background-color: #FFFBD4;
 }
 h1 {
-  color: blue;
+  color: #3C2B4F;
+}
+h2 {
+  color: #3C2B4F;
 }
 p {
-  color: red;
+  color: #3C2B4F;
 }
