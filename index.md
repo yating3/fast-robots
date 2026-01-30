@@ -9,7 +9,7 @@ Hi! My name is Yating and I'm a senior studying Electrical and Computer Engineer
 
 ---
 Labs:
-* [Lab 1: Artemis and Bluetooth](./lab1.md)
+* [Lab 1: Artemis and Bluetooth](.Lab1/lab1.md)
 * Lab 2
 * Lab 3
 * Lab 4
