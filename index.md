@@ -5,5 +5,5 @@
 
 <img src="photos/headshot.jpeg" width="250">
 
-Hi! My name is Yating and I'm a senior studying Electrical and Computer Engineering at Cornell University.
+Hi! My name is Yating and I'm a senior studying Electrical and Computer Engineering at Cornell University. I will be using this website to document my work in the ECE 4160 course.
 
