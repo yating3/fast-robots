@@ -157,6 +157,8 @@ case SEND_TIME_DATA:
 
     break;
 ```
+
+Jupyter lab output:
 <img src="lab1_t6.png" width="600" class="left">
 
 ### Task 7
@@ -182,16 +184,12 @@ case GET_TEMP_READINGS:
 
     break;
 ```
+
+Jupyter lab output:
 <img src="lab1_t7.png" width="600" class="left">
 
 ### Task 8
-Discuss the differences between these two methods, the advantages and disadvantages of both and the potential scenarios that you might choose one method over the other. How “quickly” can the second method record data? The Artemis board has 384 kB of RAM. Approximately how much data can you store to send without running out of memory?
-
-## Lab Tasks
-Configurations: Show what the relevant configurations, anything that was specifically needed to address the tasks.
-Include a brief explanation on what you did and results for each task.
-Address all questions posed in the lab.
-Include screenshots, screen recordings, pictures, or videos of relevant results (i.e. messages received in Jupyter Notebook, serial terminal print of messages received by Artemis).
+The method of storing data in an array first allows you to collect more precise data as shown by the timestamps given. The timestamp only changes once in the 30 element array. The values change more frequently for the method of sending the time every time it's received. The second method may require more power and storage for the volume of data collected, but it allows you to see changes in more detail. This could be helpful for recording something that happens very quickly. If something changes more slowly, the first method would be better. The second method records data at over 40 messages/millisecond. Since each message is 11 bytes, I can store about 35,000 data points.
 
 ## Discussion
-Briefly describe what you’ve learned, challenges that you faced, and/or any unique solutions used to fix problems. It is important to keep these writeups succinct. You will not get extra points for writing more words if the content doesn’t contribute to communicating your understanding of the lab material.
+I learned how to connect the Artemis board with my laptop using bluetooth. I also gained a better understanding of how bluetooth worked and the different operations that I can use to send and receive data from the board. Overall it wasn't too challenging, but I did have to spend some time debugging and fixing errors. 
