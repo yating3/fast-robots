@@ -14,7 +14,7 @@ The blue LED on the board flashes.
 ### 2. Serial
 Message are echoed back in the Serial Monitor.
 
-<img src="lab1_serial.png" width="500" class="left">
+<img src="lab1_serial.png" width="1000" class="left">
 
 ### 3. Analog Read
 The temperature reading increases when I hold the board in my hand.
