@@ -14,7 +14,7 @@ The blue LED on the board flashes.
 ### 2. Serial
 Message are echoed back in the Serial Monitor.
 
-<img src="lab1_serial.png" width="1000" class="left">
+<img src="lab1_serial.png" width="600" class="left">
 
 ### 3. Analog Read
 The temperature reading increases when I hold the board in my hand.
@@ -45,7 +45,7 @@ UUID('54d98045-b89c-437c-b219-ad830cef9fff')
 ### Bluetooth Connection
 After setting everything up, I was able to establish a bluetooth connection.
 
-<img src="lab1_bluetooth.png" width="500" class="left">
+<img src="lab1_bluetooth.png" width="600" class="left">
 
 ### Task 1
 Send a string from the computer to the Artemis board using the ECHO command.
