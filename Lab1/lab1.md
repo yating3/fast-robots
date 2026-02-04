@@ -72,7 +72,7 @@ case ECHO:
     
     break;
 ```
-Output:
+Jupyter lab output:
 <img src="lab1_t1.png" width="600" class="left">
 
 ### Task 2
@@ -106,7 +106,10 @@ case SEND_THREE_FLOATS:
 
     break;
 ```
+Sending command:
 <img src="lab1_t2.png" width="600" class="left">
+
+Serial monitor output:
 <img src="lab1_t2_out.png" width="400" class="left">
 
 ### Task 3
@@ -125,11 +128,17 @@ case GET_TIME_MILLIS:
 
 ### Task 4
 Set up a notification handler in Python that receives strings from the Artemis board and extracts the time.
+
+Notification handler code and output:
 <img src="lab1_t4.png" width="600" class="left">
 
 ### Task 5
 Use a loop to generate and send the current time in milliseconds to my laptop for it to be processed by the notification handler.
+
+Jupyter lab output:
 <img src="lab1_t5.png" width="600" class="left">
+
+I found that it took 1353 milliseconds to send 40 messages. This means that there was about 35 milliseconds between messages. Messages were being sent at a rate of about 30 messages/second. The strings sent were 11 bytes, one for each character. The effective data transfer rate is 330 bytes/second.
 
 ### Task 6
 Create a global array to store time stamps. Create SEND_TIME_DATA which loops through the array sends data to my laptop to be processed. 
