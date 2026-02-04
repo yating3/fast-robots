@@ -7,6 +7,9 @@ In order to set up my computer for Lab 1, I installed the Arduino IDE and update
 
 ### 1. Blink
 The blue LED on the board flashes.
+<video width="320" height="240" controls loop="" muted="" autoplay="">
+    <source src="https://github.com/yating3/fast-robots/raw/refs/heads/main/Lab1/IMG_3480.MOV" />
+</video>
 
 ### 2. Serial
 Message are echoed back in the Serial Monitor.
