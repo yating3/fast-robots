@@ -7,7 +7,7 @@ In order to set up my computer for Lab 1, I installed the Arduino IDE and update
 
 ### 1. Blink
 The blue LED on the board flashes.
-<video width="480" height="320" controls loop="" muted="" autoplay="">
+<video width="480" height="310" controls loop="" muted="" autoplay="">
     <source src="https://github.com/yating3/fast-robots/raw/refs/heads/main/Lab1/lab1_blink.mov" />
 </video>
 
@@ -18,13 +18,13 @@ Message are echoed back in the Serial Monitor.
 
 ### 3. Analog Read
 The temperature reading increases when I hold the board in my hand.
-<video width="480" height="360" controls loop="" muted="" autoplay="">
+<video width="480" height="310" controls loop="" muted="" autoplay="">
     <source src="https://github.com/yating3/fast-robots/raw/refs/heads/main/Lab1/lab1_temp.mov" />
 </video>
 
 ### 4. Microphone Output
 Making noise raises the frequency of the microphone input.
-<video width="480" height="360" controls loop="" muted="" autoplay="">
+<video width="480" height="310" controls loop="" muted="" autoplay="">
     <source src="https://github.com/yating3/fast-robots/raw/refs/heads/main/Lab1/lab1_freq.mov" />
 </video>
 
@@ -33,11 +33,15 @@ This part of the lab focused on establishing a bluetooth connection between my c
 
 ### Update Artemis MAC Address
 I got the MAC address by burning the ble_arduino.ino sketch. I then updated the MAC address in connections.yaml.
+
+Arduino IDE Serial monitor output:
 ```
 Advertising BLE with MAC: c0:81:d5:22:a9:64
 ```
 ### Change BLEService UUID
 I generated the UUID in jupyter. I then updated the UUID in ble_arduino.ino and connections.yaml.
+
+Jupyter lab output:
 ```
 UUID('54d98045-b89c-437c-b219-ad830cef9fff')
 ```
@@ -68,6 +72,8 @@ case ECHO:
     
     break;
 ```
+Output:
+<img src="lab1_t1.png" width="600" class="left">
 
 ### Task 2
 Send 3 floats to the Artemis board using the SEND_THREE_FLOATS command.
