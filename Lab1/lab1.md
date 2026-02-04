@@ -13,13 +13,20 @@ The blue LED on the board flashes.
 
 ### 2. Serial
 Message are echoed back in the Serial Monitor.
-<img src="Lab1/lab1_serial" width="250" class="center">
+
+<img src="lab1_serial.png" width="250" class="center">
 
 ### 3. Analog Read
 The temperature reading increases when I hold the board in my hand.
+<video width="320" height="240" controls loop="" muted="" autoplay="">
+    <source src="https://github.com/yating3/fast-robots/raw/refs/heads/main/Lab1/lab1_temp.mov" />
+</video>
 
 ### 4. Microphone Output
 Making noise raised the highest frequency of the microphone input.
+<video width="320" height="240" controls loop="" muted="" autoplay="">
+    <source src="https://github.com/yating3/fast-robots/raw/refs/heads/main/Lab1/lab1_freq.mov" />
+</video>
 
 ## Lab 1B
 This part of the lab focused on establishing a bluetooth connection between my computer and the Artemis board. This is done using Bluetooth Low Energy (BLE) which is analogous to a bulletin board with computers acting as community members reading the bulletin board. The Artemis board acts as the bulletin board which the computer reads from. This lab also uses a codebase that holds the functions that will be used. The file ble_arduino.ino contains the code that will run the Artemis board.
@@ -37,7 +44,8 @@ UUID('54d98045-b89c-437c-b219-ad830cef9fff')
 
 ### Bluetooth Connection
 After setting everything up, I was able to establish a bluetooth connection.
-<img src="Lab1/lab1_bluetooth" width="250" class="center">
+
+<img src="lab1_bluetooth.png" width="250" class="center">
 
 ### Task 1
 
