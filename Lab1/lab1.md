@@ -73,22 +73,101 @@ case ECHO:
 Send 3 floats to the Artemis board using the SEND_THREE_FLOATS command.
 
 ```
+case SEND_THREE_FLOATS:
+    float float_a, float_b, float_c;
+
+    // Extract the next value from the command string as an integer
+    success = robot_cmd.get_next_value(float_a);
+    if (!success)
+        return;
+
+    // Extract the next value from the command string as an integer
+    success = robot_cmd.get_next_value(float_b);
+    if (!success)
+        return;
+
+    // Extract the next value from the command string as an integer
+    success = robot_cmd.get_next_value(float_c);
+    if (!success)
+        return;
+
+    Serial.print("Three Floats: ");
+    Serial.print(float_a);
+    Serial.print(", ");
+    Serial.print(float_b);
+    Serial.print(", ");
+    Serial.println(float_c);
+
+    break;
 ```
+<img src="lab1_t2.png" width="600" class="left">
+<img src="lab1_t2_out.png" width="400" class="left">
 
 ### Task 3
 Write a GET_TIME_MILLIS command that returns a string with the time in milliseconds.
+```
+case GET_TIME_MILLIS:
+
+    tx_estring_value.clear();
+    tx_estring_value.append("T: ");
+    tx_estring_value.append((int) millis());
+    tx_characteristic_string.writeValue(tx_estring_value.c_str());
+
+    break;
+```
+<img src="lab1_t3.png" width="600" class="left">
 
 ### Task 4
 Set up a notification handler in Python that receives strings from the Artemis board and extracts the time.
+<img src="lab1_t4.png" width="600" class="left">
 
 ### Task 5
 Use a loop to generate and send the current time in milliseconds to my laptop for it to be processed by the notification handler.
+<img src="lab1_t5.png" width="600" class="left">
 
 ### Task 6
 Create a global array to store time stamps. Create SEND_TIME_DATA which loops through the array sends data to my laptop to be processed. 
+```
+case SEND_TIME_DATA:   
+    for (int i=0; i<size; i++){
+        timestamp_array[i] = (int) millis();
+    }
+    
+    for (int i=0; i<size; i++){
+        tx_estring_value.clear();
+        tx_estring_value.append("T: ");
+        tx_estring_value.append(timestamp_array[i]);
+        tx_characteristic_string.writeValue(tx_estring_value.c_str());             
+    }
+
+    break;
+```
+<img src="lab1_t6.png" width="600" class="left">
 
 ### Task 7
 Add an array to store temperature readings corresponding with time. Create GET_TEMP_READINGS which loops through both arrays and sends each temperature reading with a time stamp.
+```
+case GET_TEMP_READINGS:   
+    for (int i=0; i<size; i++){
+        timestamp_array[i] = (int) millis();
+    }
+
+    for (int i=0; i<size; i++){
+        temperature_array[i] = (int) getTempDegF();
+    }
+    
+    for (int i=0; i<size; i++){
+        tx_estring_value.clear();
+        tx_estring_value.append("T: ");
+        tx_estring_value.append(timestamp_array[i]);
+        tx_estring_value.append(" Temp: ");
+        tx_estring_value.append(temperature_array[i]);
+        tx_characteristic_string.writeValue(tx_estring_value.c_str());             
+    }
+
+    break;
+```
+<img src="lab1_t7.png" width="600" class="left">
 
 ### Task 8
 Discuss the differences between these two methods, the advantages and disadvantages of both and the potential scenarios that you might choose one method over the other. How “quickly” can the second method record data? The Artemis board has 384 kB of RAM. Approximately how much data can you store to send without running out of memory?
