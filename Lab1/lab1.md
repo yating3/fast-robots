@@ -8,11 +8,12 @@ In order to set up my computer for Lab 1, I installed the Arduino IDE and update
 ### 1. Blink
 The blue LED on the board flashes.
 <video width="320" height="240" controls loop="" muted="" autoplay="">
-    <source src="https://github.com/yating3/fast-robots/raw/refs/heads/main/Lab1/IMG_3480.MOV" />
+    <source src="https://github.com/yating3/fast-robots/raw/refs/heads/main/Lab1/lab1_blink.mov" />
 </video>
 
 ### 2. Serial
 Message are echoed back in the Serial Monitor.
+<img src="Lab1/lab1_serial" width="250" class="center">
 
 ### 3. Analog Read
 The temperature reading increases when I hold the board in my hand.
@@ -36,7 +37,7 @@ UUID('54d98045-b89c-437c-b219-ad830cef9fff')
 
 ### Bluetooth Connection
 After setting everything up, I was able to establish a bluetooth connection.
-
+<img src="Lab1/lab1_bluetooth" width="250" class="center">
 
 ### Task 1
 
