@@ -10,14 +10,14 @@ Hi! My name is Yating and I'm a senior studying Electrical and Computer Engineer
 ---
 ## Labs:
 * [Lab 1: Artemis and Bluetooth](./Lab1/lab1.md)
-* Lab 2
-* Lab 3
-* Lab 4
-* Lab 5
-* Lab 6
-* Lab 7
-* Lab 8
-* Lab 9
-* Lab 10
-* Lab 11
-* Lab 12
+* [Lab 2: IMU](./Lab2/lab2.md)
+* [Lab 3: ToF](./Lab3/lab3.md)
+* [Lab 4: Motor Drivers and Open Loop Control](./Lab4/lab4.md)
+* [Lab 5: Linear PID and Linear Interpolation](./Lab5/lab5.md)
+* [Lab 6: Orientation PID](./Lab6/lab6.md)
+* [Lab 7: Kalman Filtering](./Lab7/lab7.md)
+* [Lab 8: Stunts!](./Lab8/lab8.md)
+* [Lab 9: Mapping](./Lab9/lab9.md)
+* [Lab 10: Localization (sim)](./Lab10/lab10.md)
+* [Lab 11: Localization (real)](./Lab11/lab11.md)
+* [Lab 12: Planning and Execution](./Lab12/lab12.md)
