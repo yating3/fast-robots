@@ -7,7 +7,7 @@ In order to set up my computer for Lab 1, I installed the Arduino IDE and update
 
 ### 1. Blink
 The blue LED on the board flashes.
-<video width="480" height="360" controls loop="" muted="" autoplay="">
+<video width="480" height="320" controls loop="" muted="" autoplay="">
     <source src="https://github.com/yating3/fast-robots/raw/refs/heads/main/Lab1/lab1_blink.mov" />
 </video>
 
@@ -23,7 +23,7 @@ The temperature reading increases when I hold the board in my hand.
 </video>
 
 ### 4. Microphone Output
-Making noise raised the highest frequency of the microphone input.
+Making noise raises the frequency of the microphone input.
 <video width="480" height="360" controls loop="" muted="" autoplay="">
     <source src="https://github.com/yating3/fast-robots/raw/refs/heads/main/Lab1/lab1_freq.mov" />
 </video>
