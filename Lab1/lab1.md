@@ -7,7 +7,7 @@ In order to set up my computer for Lab 1, I installed the Arduino IDE and update
 
 ### 1. Blink
 The blue LED on the board flashes.
-<video width="640" height="480" controls loop="" muted="" autoplay="">
+<video width="480" height="360" controls loop="" muted="" autoplay="">
     <source src="https://github.com/yating3/fast-robots/raw/refs/heads/main/Lab1/lab1_blink.mov" />
 </video>
 
@@ -18,13 +18,13 @@ Message are echoed back in the Serial Monitor.
 
 ### 3. Analog Read
 The temperature reading increases when I hold the board in my hand.
-<video width="320" height="240" controls loop="" muted="" autoplay="">
+<video width="480" height="360" controls loop="" muted="" autoplay="">
     <source src="https://github.com/yating3/fast-robots/raw/refs/heads/main/Lab1/lab1_temp.mov" />
 </video>
 
 ### 4. Microphone Output
 Making noise raised the highest frequency of the microphone input.
-<video width="320" height="240" controls loop="" muted="" autoplay="">
+<video width="480" height="360" controls loop="" muted="" autoplay="">
     <source src="https://github.com/yating3/fast-robots/raw/refs/heads/main/Lab1/lab1_freq.mov" />
 </video>
 
@@ -45,30 +45,53 @@ UUID('54d98045-b89c-437c-b219-ad830cef9fff')
 ### Bluetooth Connection
 After setting everything up, I was able to establish a bluetooth connection.
 
-<img src="lab1_bluetooth.png" width="500" class="center">
+<img src="lab1_bluetooth.png" width="500" class="left">
 
 ### Task 1
+Send a string from the computer to the Artemis board using the ECHO command.
 
+```
+case ECHO:
+
+    char char_arr[MAX_MSG_SIZE];
+
+    // Extract the next value from the command string as a character array
+    success = robot_cmd.get_next_value(char_arr);
+    if (!success)
+        return;
+
+    tx_estring_value.clear();
+    tx_estring_value.append("Robot says: ");
+    tx_estring_value.append(char_arr);
+    tx_estring_value.append(" :)");
+    tx_characteristic_string.writeValue(tx_estring_value.c_str());
+    
+    break;
+```
 
 ### Task 2
+Send 3 floats to the Artemis board using the SEND_THREE_FLOATS command.
 
+```
+```
 
 ### Task 3
-
+Write a GET_TIME_MILLIS command that returns a string with the time in milliseconds.
 
 ### Task 4
-
+Set up a notification handler in Python that receives strings from the Artemis board and extracts the time.
 
 ### Task 5
-
+Use a loop to generate and send the current time in milliseconds to my laptop for it to be processed by the notification handler.
 
 ### Task 6
-
+Create a global array to store time stamps. Create SEND_TIME_DATA which loops through the array sends data to my laptop to be processed. 
 
 ### Task 7
-
+Add an array to store temperature readings corresponding with time. Create GET_TEMP_READINGS which loops through both arrays and sends each temperature reading with a time stamp.
 
 ### Task 8
+Discuss the differences between these two methods, the advantages and disadvantages of both and the potential scenarios that you might choose one method over the other. How “quickly” can the second method record data? The Artemis board has 384 kB of RAM. Approximately how much data can you store to send without running out of memory?
 
 ## Lab Tasks
 Configurations: Show what the relevant configurations, anything that was specifically needed to address the tasks.
