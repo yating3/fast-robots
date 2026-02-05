@@ -38,14 +38,16 @@ for (int i=0; i<3; i++){
     Include graphs for your fourier transform
     Discuss the results
 
-Gyroscope
+## Gyroscope
   Include documentation for pitch, roll, and yaw with images of the results of different IMU positions
   Demonstrate the accuracy and range of the complementary filter, and discuss any design choices
 
-Sample Data
+## Sample Data
   Speed of sampling discussion
   Demonstrate collected and stored time-stamped IMU data in arrays
   Demonstrate 5s of IMU data sent over Bluetooth
 
-Record a Stunt
-  Include a video (or some videos) of you playing with the car and discuss your observations
+## Stunt
+
+
+The car was pretty responsive to the remote and took a few seconds to get to full speed. The forward/backward and left/right controls can be used together to do different turns. It can also spin in place without much displacement. To flip it, I drove it forward very quickly and changed direction. 
