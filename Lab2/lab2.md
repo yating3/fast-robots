@@ -147,12 +147,15 @@ g_yaw_array[i] = g_yaw_array[i-1] + myICM.gyrZ() * dt;
 ```
 
 Roll:
+
 <img src="lab2_groll.png" width="600" class="left">
 
 Pitch:
+
 <img src="lab2_gpitch.png" width="600" class="left">
 
 Yaw:
+
 <img src="lab2_gyaw.png" width="600" class="left">
 
 The results had less noise, but more drift than the accelerometer readings.
@@ -160,7 +163,7 @@ The results had less noise, but more drift than the accelerometer readings.
 ### Complementary filter
 Since there's advantages and tradeoffs between accelerometer and gyroscope data, a complementary filter can use a mix of both to create a better signal. 
 
-<img src="lab2_cpitch.png" width="600" class="left">
+<img src="lab2_cpitch.png" width="400" class="left">
 
 ## Sampling Data
 After speeding up the execution of my main loop I was able to sample data at 112 values/second. I stored my data in separate arrays for roll, pitch, yaw, and time. I also had separate arrays for accelerometer and gyroscope readings. This is better because it allows me to only send what I need without iterating through a large array. Most of my data was stored as floats because it's more precise and makes calculations easier. 
