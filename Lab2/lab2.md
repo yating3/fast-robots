@@ -7,7 +7,7 @@ In this lab I configured the intertial measurement unit
 
 To set up the IMU, I installed the SparkFun IMU Arduino Library and connected the IMU to the Artemis board using QWIIC connectors. 
 
-<img src="lab2_setup.jpeg" width="600" class="left">
+<img src="lab2_setup.jpeg" width="400" class="left">
 
 ### Example Code
 I tested the IMU using an Arduino example sketch. AD0_VAL is the last bit of the I2C address. It represents whether the ADR jumper is closed. It's 0 when the jumper is closed and 1 when it isn't. It should be 1 for this lab because the jumper isn't soldered close.
@@ -31,9 +31,11 @@ for (int i=0; i<3; i++){
 ```
 
 ## Accelerometer
+
+### Calculating Pitch and Roll
 I used the following equation from the lecture slides to calculate pitch and roll. I multiplied the value by 180/pi to convert from radians to degrees.
-(picture of equation)
-<img src="lab2_accelequation.png" width="600" class="left">
+
+<img src="lab2_accelequations.png" width="300" class="left">
 
 0 degree pitch and roll:
 
@@ -85,10 +87,9 @@ void printPitchRoll(float pitch, float roll) {
 }
 ```
 
+I believe that the acceleration data that I'm receiving is very accurate. It's never more than 3 degrees off and part of the error can be attributed to the uneven surface that I'm using to take measurements. I don't think a two-point calibration is necessary.
 
-  Accelerometer accuracy discussion
-
-I believe that the acceleration data that I'm receiving is accurate
+### Frequency Spectrum
 
   Noise in the frequency spectrum analysis
     Include graphs for your fourier transform
