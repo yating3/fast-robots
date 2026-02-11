@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="../index.css" />
 
 # Lab 2: IMU
-In this lab I configured the intertial measurement unit 
+In this lab I configured the intertial measurement unit and analyzed accelerometer and gyroscope readings.
 
 ## Set up the IMU
 
@@ -77,18 +77,41 @@ void printPitchRoll(float pitch, float roll) {
 <img src="lab2_posroll.jpeg" width="600" class="left">
 
 
-The readings were a few degrees off, but this is likely due to the fact that it wasn't placed at exactly 0/90/-90 degrees. I believe that the acceleration data that I'm receiving is very accurate. It's never more than 3 degrees off and part of the error can be attributed to the uneven surface that I'm using to take measurements. I don't think a two-point calibration is necessary.
+The readings were a few degrees off, but this is likely due to the fact that it wasn't placed at exactly 0/90/-90 degrees. I believe that the acceleration data that I'm receiving is very accurate. It's never more than 3 degrees off and part of the error can be attributed to the uneven surface that I'm using to take measurements. Based on these readings, I don't think a two-point calibration is necessary.
 
 ### Frequency Spectrum
 
-  Noise in the frequency spectrum analysis
-    Include graphs for your fourier transform
-    Discuss the results
+To get the data for frequency spectrum analysis, I tilted the IMU back and forth and stored the readings in arrays along with the time. I used a notification handler in Jupyter and wrote a command called SEND_ACC_DATA in Arduino in order to send pitch and roll data over bluetooth.
+
+Snippet from SEND_ACC_DATA:
+```
+for (int i=0; i<acc_size; i++){
+  tx_estring_value.clear();
+  tx_estring_value.append(a_time_array[i]);
+  tx_estring_value.append(",");
+  tx_estring_value.append(a_pitch_array[i]);
+  tx_estring_value.append(",");
+  tx_estring_value.append(a_roll_array[i]);
+  tx_characteristic_string.writeValue(tx_estring_value.c_str());             
+}
+```
+
+Notification Handler:
+```
+def notification_handler(uuid, byte_array):
+    s = ble.bytearray_to_string(byte_array)
     
-To get the signals for frequency spectrum analysis, I tilted the IMU back and forth. I used a 
+    time, pitch, roll = s.split(",")
+    print("Time: " + time, end = " ")
+    print("Pitch: " + pitch, end = " ")
+    print("Roll: " + roll)
+
+    a_time.append(time)
+    a_pitch.append(float(pitch))
+    a_roll.append(float(roll))
+```
 
 Data for Pitch:
-
 
 <img src="lab2_pitchdata.png" width="600" class="left">
 
@@ -109,6 +132,20 @@ Low Pass Filter on Roll:
 ## Gyroscope
   Include documentation for pitch, roll, and yaw with images of the results of different IMU positions
   Demonstrate the accuracy and range of the complementary filter, and discuss any design choices
+
+For the gyroscope, I followed a similar process to calculate and send the roll, pitch, and yaw data over bluetooth. 
+
+Roll:
+<img src="lab2_grollF.png" width="600" class="left">
+
+Pitch:
+<img src="lab2_gpitch.png" width="600" class="left">
+
+Yaw:
+<img src="lab2_gyaw.png" width="600" class="left">
+
+Complementary filter:
+
 
 ## Sample Data
   Speed of sampling discussion
