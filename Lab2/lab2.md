@@ -37,6 +37,25 @@ I used the following equation from the lecture slides to calculate pitch and rol
 
 <img src="lab2_accelequations.png" width="300" class="left">
 
+Arduino code:
+```
+acc_pitch = atan2(myICM.accX(), myICM.accZ()) * 180 / M_PI;
+acc_roll = atan2(myICM.accY(), myICM.accZ()) * 180 / M_PI;
+```
+
+I created a function to print the pitch and roll to the serial monitor as well.
+```
+void printPitchRoll(float pitch, float roll) {
+  SERIAL_PORT.print("Pitch: ");
+  SERIAL_PORT.print(pitch);
+  SERIAL_PORT.print("  |  ");
+
+  SERIAL_PORT.print("Roll: ");
+  SERIAL_PORT.print(roll);
+  SERIAL_PORT.println();
+}
+```
+
 0 degree pitch and roll:
 
 <img src="lab2_zeropitchroll.jpeg" width="600" class="left">
