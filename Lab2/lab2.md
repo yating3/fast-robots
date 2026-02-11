@@ -65,12 +65,12 @@ I stored the calcualated pitch and roll as well as the corresponding time in mil
 acc_pitch = atan2(myICM.accX(), myICM.accZ()) * 180 / M_PI;
 acc_roll = atan2(myICM.accY(), myICM.accZ()) * 180 / M_PI;
 
-if (imu_i < imu_size) {
-    pitch_array[imu_i] = acc_pitch;
-    roll_array[imu_i] = acc_roll;
-    imu_time_array[imu_i] = millis();
+if (acc_i < acc_size) {
+    a_pitch_array[acc_i] = acc_pitch;
+    a_roll_array[acc_i] = acc_roll;
+    a_time_array[acc_i] = millis();
 
-    imu_i++;
+    acc_i++;
 }
 ```
 
