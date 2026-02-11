@@ -7,16 +7,17 @@ In this lab I configured the intertial measurement unit
 
 To set up the IMU, I installed the SparkFun IMU Arduino Library and connected the IMU to the Artemis board using QWIIC connectors. 
 
+<img src="lab2_setup.jpeg" width="600" class="left">
+
 ### Example Code
 I tested the IMU using an Arduino example sketch. AD0_VAL is the last bit of the I2C address. It represents whether the ADR jumper is closed. It's 0 when the jumper is closed and 1 when it isn't. It should be 1 for this lab because the jumper isn't soldered close.
 
 Running the Example1_Basics sketch:
-(video of example)
+<video width="480" height="310" controls loop="" muted="" autoplay="">
+    <source src="https://github.com/yating3/fast-robots/raw/refs/heads/main/Lab2/lab2_example.mov" />
+</video>
 
 The Serial Monitor shows acceleration, gyroscope, and temperature data. The orientation of the axes is indicaated on the IMU. As I accelerate the sensor in the positive x, y, and z direction relative to gravity, the respective acceleration value increases. As I accelerate in the negative direction, it decreases. As I rotate the sensor in the positive x, y, and z direction, the respective gyroscope value increases. As I rotate in the negative direction, it decreases.
-
-
-  (Picture of your Artemis IMU connections)
   
 ### Blink LED on Start-up
 I added a loop that blinks the LED three times slowly on start-up as a visual indication that the board is running.
@@ -31,49 +32,63 @@ for (int i=0; i<3; i++){
 
 ## Accelerometer
   Image of output at {-90, 0, 90} degrees for pitch and roll (include equations)
-
+I used the following equation from the lecture slides to calculate pitch and roll. I multiplied the value by 180/pi to convert from radians to degrees.
 (picture of equation)
 
 0 degree pitch and roll
+
+<img src="lab2_zeropitchroll.jpeg" width="600" class="left">
+
 -90 degree pitch
-(pic)
+
+<img src="lab2_negpitch.jpeg" width="600" class="left">
+
 90 degree pitch
-pic
+
+<img src="lab2_pospitch.jpeg" width="600" class="left">
+
 -90 degree roll
-pci
+
+<img src="lab2_negroll.jpeg" width="600" class="left">
+
 90 degree roll
-pic
 
+<img src="lab2_posroll.jpeg" width="600" class="left">
+
+The readings were a few degrees off, but this is likely due to the fact that it wasn't placed at exactly 0/90/-90 degrees. 
+
+I stored the calcualated pitch and roll as well as the corresponding time in milliseconds in arrays. 
 ```
-if (imu_i < imu_size) {
-    float acc_pitch = atan2(myICM.accX(), myICM.accZ()) * 180 / M_PI;
-    pitch_array[imu_i] = atan2(myICM.accX(), myICM.accZ()) * 180 / M_PI;
+acc_pitch = atan2(myICM.accX(), myICM.accZ()) * 180 / M_PI;
+acc_roll = atan2(myICM.accY(), myICM.accZ()) * 180 / M_PI;
 
-    float acc_roll = atan2(myICM.accY(), myICM.accZ()) * 180 / M_PI;
-    roll_array[imu_i] = atan2(myICM.accY(), myICM.accZ()) * 180 / M_PI;
+if (imu_i < imu_size) {
+    pitch_array[imu_i] = acc_pitch;
+    roll_array[imu_i] = acc_roll;
+    imu_time_array[imu_i] = millis();
+
     imu_i++;
 }
 ```
 
-
+I created a function to print the pitch and roll to the serial monitor as well.
 ```
-void printPitchRoll() {
-    float acc_pitch = atan2(myICM.accX(), myICM.accZ()) * 180 / M_PI;
-    SERIAL_PORT.print("Pitch: ");
-    SERIAL_PORT.print(acc_pitch);
-    SERIAL_PORT.print("  |  ");
+void printPitchRoll(float pitch, float roll) {
+  SERIAL_PORT.print("Pitch: ");
+  SERIAL_PORT.print(pitch);
+  SERIAL_PORT.print("  |  ");
 
-    float acc_roll = atan2(myICM.accY(), myICM.accZ()) * 180 / M_PI;
-    SERIAL_PORT.print("Roll: ");
-    SERIAL_PORT.print(acc_roll);
-    SERIAL_PORT.println();
+  SERIAL_PORT.print("Roll: ");
+  SERIAL_PORT.print(roll);
+  SERIAL_PORT.println();
 }
-
 ```
 
 
-Video 
   Accelerometer accuracy discussion
+
+I believe that the acceleration data that I'm receiving is accurate
+
   Noise in the frequency spectrum analysis
     Include graphs for your fourier transform
     Discuss the results
