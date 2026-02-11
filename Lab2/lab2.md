@@ -130,13 +130,24 @@ Low Pass Filter on Roll:
 <img src="lab2_rollLPF.png" width="600" class="left">
 
 ## Gyroscope
-  Include documentation for pitch, roll, and yaw with images of the results of different IMU positions
-  Demonstrate the accuracy and range of the complementary filter, and discuss any design choices
 
 For the gyroscope, I followed a similar process to calculate and send the roll, pitch, and yaw data over bluetooth. 
 
+### Roll, Pitch, Yaw
+
+I implemented it in a command called SEND_GYR_DATA.
+```
+dt = (millis()-lastT)/1000;
+lastT = millis();
+
+g_time_array[i] = lastT;
+g_roll_array[i] = g_roll_array[i-1] + myICM.gyrX() * dt;
+g_pitch_array[i] = g_pitch_array[i-1] + myICM.gyrY() * dt;
+g_yaw_array[i] = g_yaw_array[i-1] + myICM.gyrZ() * dt;
+```
+
 Roll:
-<img src="lab2_grollF.png" width="600" class="left">
+<img src="lab2_groll.png" width="600" class="left">
 
 Pitch:
 <img src="lab2_gpitch.png" width="600" class="left">
@@ -144,13 +155,15 @@ Pitch:
 Yaw:
 <img src="lab2_gyaw.png" width="600" class="left">
 
-Complementary filter:
+The results had less noise, but more drift than the accelerometer readings.
 
+### Complementary filter
+Since there's advantages and tradeoffs between accelerometer and gyroscope data, a complementary filter can use a mix of both to create a better signal. 
 
-## Sample Data
-  Speed of sampling discussion
-  Demonstrate collected and stored time-stamped IMU data in arrays
-  Demonstrate 5s of IMU data sent over Bluetooth
+<img src="lab2_cpitch.png" width="600" class="left">
+
+## Sampling Data
+After speeding up the execution of my main loop I was able to sample data at 112 values/second. I stored my data in separate arrays for roll, pitch, yaw, and time. I also had separate arrays for accelerometer and gyroscope readings. This is better because it allows me to only send what I need without iterating through a large array. Most of my data was stored as floats because it's more precise and makes calculations easier. 
 
 ## Stunt
 
