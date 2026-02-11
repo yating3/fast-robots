@@ -77,42 +77,34 @@ void printPitchRoll(float pitch, float roll) {
 <img src="lab2_posroll.jpeg" width="600" class="left">
 
 
-The readings were a few degrees off, but this is likely due to the fact that it wasn't placed at exactly 0/90/-90 degrees. 
-
-I stored the calcualated pitch and roll as well as the corresponding time in milliseconds in arrays. 
-```
-acc_pitch = atan2(myICM.accX(), myICM.accZ()) * 180 / M_PI;
-acc_roll = atan2(myICM.accY(), myICM.accZ()) * 180 / M_PI;
-
-if (acc_i < acc_size) {
-    a_pitch_array[acc_i] = acc_pitch;
-    a_roll_array[acc_i] = acc_roll;
-    a_time_array[acc_i] = millis();
-
-    acc_i++;
-}
-```
-
-I created a function to print the pitch and roll to the serial monitor as well.
-```
-void printPitchRoll(float pitch, float roll) {
-  SERIAL_PORT.print("Pitch: ");
-  SERIAL_PORT.print(pitch);
-  SERIAL_PORT.print("  |  ");
-
-  SERIAL_PORT.print("Roll: ");
-  SERIAL_PORT.print(roll);
-  SERIAL_PORT.println();
-}
-```
-
-I believe that the acceleration data that I'm receiving is very accurate. It's never more than 3 degrees off and part of the error can be attributed to the uneven surface that I'm using to take measurements. I don't think a two-point calibration is necessary.
+The readings were a few degrees off, but this is likely due to the fact that it wasn't placed at exactly 0/90/-90 degrees. I believe that the acceleration data that I'm receiving is very accurate. It's never more than 3 degrees off and part of the error can be attributed to the uneven surface that I'm using to take measurements. I don't think a two-point calibration is necessary.
 
 ### Frequency Spectrum
 
   Noise in the frequency spectrum analysis
     Include graphs for your fourier transform
     Discuss the results
+    
+To get the signals for frequency spectrum analysis, I tilted the IMU back and forth. I used a 
+
+Data for Pitch:
+
+
+<img src="lab2_pitchdata.png" width="600" class="left">
+
+Data for Roll:
+
+<img src="lab2_rolldata.png" width="600" class="left">
+
+From these graphs, I believe that there is some noise that can be reduced with a low pass filter. This is because the spikes in the frequency graphs appear to be contained within 0 to 6 Hz. The cutoff frequency that I chose was 6 Hz. I chose this value because it would filter out the noise without distorting or losing the data that I want. From this, I calculated an alpha value of 0.25. After applying the low pass filter, I was able to obtain a less noisy signal.
+
+Low Pass Filter on Pitch:
+
+<img src="lab2_pitchLPF.png" width="600" class="left">
+
+Low Pass Filter on Roll:
+
+<img src="lab2_rollLPF.png" width="600" class="left">
 
 ## Gyroscope
   Include documentation for pitch, roll, and yaw with images of the results of different IMU positions
