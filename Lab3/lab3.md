@@ -2,38 +2,44 @@
 
 # Lab 3: ToF
 
+The purpose of this lab is to wire and test time of flight sensors. The robot uses these 2 ToF sensors to detect distance.
 
-## Prelab
-I chose to use the longer wires for the ToF sensors so that I would have more flexibility with the placement. I used the shorter wires for the Artemis and IMU. I plan to place one ToF on the front of the car and another on the side. This will help me detect obstacles from different sides. 
+## Wiring
 
+Before lab, I created a wiring diagram since I'll be cutting and soldering wires in this lab. I chose to use the longer wires for the ToF sensors so that I would have more flexibility with the placement. I used the shorter wires for the Artemis and IMU since they can be placed anywhere. I decided to place one sensor on the front and one sensor on the left side. I will miss obstacles on the left and behind the robot. This will make it more challenging for the robot to move backwards and avoid obstacles when turning left. I believe the front sensor will be used the most because the robot is usually moving forward. I used black for ground, red for power, blue for SDA, and yellow for SCL because this is standard.
+
+## Example Code
 
 - Note the I2C sensor address
 
 - Briefly discuss the approach to using 2 ToF sensors
 
+In order to use 2 ToF sensors, I wired the xShut pin to pin 8 of the Artemis. 
+
 - Briefly discuss placement of sensors on robot and scenarios where you will miss obstacles
 
-- Sketch of wiring diagram (with brief explanation if you want)
+
+I connected the 2 ToF sensors and the IMU to the Artemis using the QWIIC breakout board. I cut one end of the QWIIC connect cables in order to solder them to the ToF sensors.
+
+(wiring diagram)
 
 ## Lab Tasks
 
 ### Set up
 In order to power the Artemis, I soldered a 750 mAh battery to the Artemis using a JST connector. I then put heat shrink over the exposed wire to isolate it in order to avoid shorting it. 
 
-3. Connect the QWIIC break-out board to the Artemis
 
 (Picture of your ToF sensor connected to your QWIIC breakout board)
 
 4. Connect the first ToF sensor to the QWIIC breakout board.
-- You will have to cut one end of a QWIIC cable and solder the other to your sensor. You have two long cables and two short ones, choose wisely.
-- Think about which color attaches to SDA/SCL?
-- The photo below is an example of a sensor with a cable. Note that the protective film has not yet been removed.
 
 5. Scan the I2C channel to find the sensor
 - Go to File->Examples->Apollo3->Wire and open Example05_wire_I2C
 - Browse through the code to see how to use i2c commands.
 - Run the code. Does the address match what you expected? If not, explain why.
 
+The address doesn't match what I initially expected. According to the ToF datasheet it uses a device address of 0x52, but the serial monitor displayed 0x29 when I ran the Example05_wire_I2C code. 
+ 
 (Screenshot of Artemis scanning for I2C device (and discussion on I2C address))
 
 6. The ToF sensor has three modes (Short, Medium, and Long) that optimize the ranging performance given the maximum expected range. Discuss the pros/cons of each mode, and think about which one could work on the final robot. (Note: medium mode is only available with the Polulu VL53L1X Library).
