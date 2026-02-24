@@ -13,7 +13,7 @@ Before lab, I planned out the arrangement of components on my car and created a 
 ### Wiring
 I used black for ground, red for power, blue for SDA, and yellow for SCL because this is standard. I used a white wire to connect xShut of one ToF sensor to pin 8 of the Artemis which enabled me to shut the sensor off and set the address of the other one. This allows me to use both simultaneously. I connected the 2 ToF sensors and the IMU to the Artemis using the QWIIC breakout board. I cut one end of the QWIIC connect cables in order to solder them to the ToF sensors. In order to power the Artemis, I soldered a JST connector to the 750 mAh LIPO battery so it could be plugged into the board. I then put heat shrink over the exposed wires to isolate them and avoid shorting the battery. 
 
-<img src="lab3_wiring.png" width="600" class="left">
+<img src="lab3_wiring.png" width="600" class="center">
 
 ### I2C Channel
 
@@ -21,7 +21,7 @@ Example05_wire_I2C scans the I2C channel to find the sensor. The address doesn't
 
 Serial monitor output:
 
-<img src="lab3_i2c_addr.png" width="600" class="left">
+<img src="lab3_i2c_addr.png" width="600" class="center">
 
 ## Lab Tasks
 
@@ -31,18 +31,32 @@ Each sensing mode has a different maximum distance that they can detect obstacle
 
 Short mode distance readings using Example1_ReadDistance:
 
-<img src="lab3_read_dist.png" width="500" class="left">
+<img src="lab3_read_dist.png" width="500" class="center">
 
-- Document your ToF sensor range, accuracy, repeatability, and ranging time
+### Sensor Range, Accuracy, Repeatability, and Ranging Time
 
+In order to measure range and accuracy, I measured 
+
+Testing setup:
+<img src="lab3_test_setup.png" width="500" class="center">
+
+### Using 2 Sensors
 8. Using notes from the pre-lab, hook up both ToF sensors simultaneously and demonstrate that both work.
 - Don’t use the Example05_wire code to do this, it works poorly when multiple sensors are attached.
 
 All sensors connected:
 
-<img src="lab3_setup.png" width="600" class="left">
+<img src="lab3_setup.png" width="600" class="center">
 
 (2 ToF sensors and the IMU: Discussion and screenshot/video of sensors working in parallel)
+
+Shutting down sensor 1 and changing sensor 2 address:
+
+```
+  pinMode(SHUTDOWN_PIN, OUTPUT);
+  digitalWrite(SHUTDOWN_PIN, LOW); // shut down sensor 1
+  distanceSensor.setI2CAddress(0x54); // change sensor 2 address
+```
 
 9. In future labs, it is essential that the code executes quickly, therefore you cannot let your code hang while it waits for the sensor to finish a measurement. Write a piece of code that prints the Artemis clock to the Serial as fast as possible, continuously, and prints new ToF sensor data from both sensors only when available.
 - The distanceSensor.checkForDataReady() routine can be called to check when new data is available.
