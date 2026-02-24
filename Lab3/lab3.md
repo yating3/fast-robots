@@ -13,7 +13,7 @@ Before lab, I planned out the arrangement of components on my car and created a 
 ### Wiring
 I used black for ground, red for power, blue for SDA, and yellow for SCL because this is standard. I used a white wire to connect xShut of one ToF sensor to pin 8 of the Artemis which enabled me to shut the sensor off and set the address of the other one. This allows me to use both simultaneously. I connected the 2 ToF sensors and the IMU to the Artemis using the QWIIC breakout board. I cut one end of the QWIIC connect cables in order to solder them to the ToF sensors. In order to power the Artemis, I soldered a JST connector to the 750 mAh LIPO battery so it could be plugged into the board. I then put heat shrink over the exposed wires to isolate them and avoid shorting the battery. 
 
-<img src="lab3_wiring.png" width="400" class="left">
+<img src="lab3_wiring.png" width="600" class="left">
 
 ### I2C Channel
 
@@ -21,7 +21,7 @@ Example05_wire_I2C scans the I2C channel to find the sensor. The address doesn't
 
 Serial monitor output:
 
-<img src="lab3_i2c_addr.png" width="400" class="left">
+<img src="lab3_i2c_addr.png" width="600" class="left">
 
 ## Lab Tasks
 
@@ -35,7 +35,7 @@ Long mode: A benefit of medium mode is the maximum distance of 3m.
 
 Short mode distance readings:
 
-<img src="lab3_read_dist.png" width="400" class="left">
+<img src="lab3_read_dist.png" width="500" class="left">
 
 7. Test your chosen mode
 - Use the “..\Arduino\libraries\SparkFun_VL53L1X_4m_Laser_Distance_Sensor\examples\Example1_ReadDistance” example
@@ -44,7 +44,7 @@ Short mode distance readings:
 
 8. Using notes from the pre-lab, hook up both ToF sensors simultaneously and demonstrate that both work.
 - Don’t use the Example05_wire code to do this, it works poorly when multiple sensors are attached.
-<img src="lab3_setup.png" width="400" class="left">
+<img src="lab3_setup.png" width="600" class="left">
 
 (2 ToF sensors and the IMU: Discussion and screenshot/video of sensors working in parallel)
 
