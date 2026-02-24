@@ -27,7 +27,7 @@ Serial monitor output:
 
 ### Sensor Modes
 
-Each sensing mode has a different maximum distance that they can detect obstacles. A longer distance means that the robot can see further and plan ahead. This is useful for large spaces where obstacles may be far away. Long mode has the longest distance at 4m. Medium is close behind at 3m. Short mode has a significantly shorter maximum distance of 1.3m that is 130% shorter than medium and 200% shorter than long. An advantage of short mode is that is has much better ambient light immunity. This means that it can work reliably under different lighting conditions. Bright lights negatively affect medium/long mode more than short mode which is barely effected. Another consideration is the timing budget. Short mode has the shortest minimum of 20ms, while long mode has the longest minimum of 140ms. This means that short mode will have a faster sampling rate making it more precise. I chose to use short mode because it's the best fit for my robot. This is a fast moving robot so accuracy and precision are priorities. Additionally, I want it to be able to perform well regardless of lighting. I don't think the shorter detection distance will be an issue since it will be moving through a relatively small area.
+Each sensing mode has a different maximum distance that they can detect obstacles. A longer distance means that the robot can see further and plan ahead. This is useful for large spaces where obstacles may be far away. Long mode has the longest distance at 4m. Medium is close behind at 3m. Short mode has a significantly shorter maximum distance of 1.3m that is 130% shorter than medium and 200% shorter than long. An advantage of short mode is that is has much better ambient light immunity. This means that it can work reliably under different lighting conditions. Bright lights negatively affect medium/long mode more than short mode which is barely effected. Another consideration is the timing budget. Short mode has the shortest minimum of 20ms, while long mode has the longest minimum of 140ms. This means that short mode will have a faster sampling rate making it more precise. I chose to use short mode because it's the best fit for my robot. This is a fast moving robot so accuracy and precision are priorities. Additionally, I want it to be able to perform well regardless of lighting. I don't think the shorter detection distance will be an issue since it will be moving around a relatively small area.
 
 Short mode distance readings using Example1_ReadDistance:
 
@@ -35,10 +35,25 @@ Short mode distance readings using Example1_ReadDistance:
 
 ### Sensor Range, Accuracy, Repeatability, and Ranging Time
 
-In order to measure range and accuracy, I measured 
+To measure range and accuracy, I took sensor readings in 10cm increments from 0 to 160cm. I found that the sensor range was 30 to 130cm. The difference between actual and measured distance was no more than 5% in this range. 
 
 Testing setup:
+
 <img src="lab3_test_setup.png" width="500" class="center">
+
+Measured vs. Actual Distance Graph:
+
+<img src="lab3_dist_graph.png" width="500" class="center">
+
+To measure repeatibility I recorded 200 data points for 30cm, 70cm, and 120cm. The sensor produces consistent results with little deviation at all these distances. It performed the best at 30cm which makes sense because it's using short range mode.
+
+| Actual Distance (cm) | Median | Range | Standard Deviation |
+| --- | --- | --- | --- |
+| 30 | 29.3325 | 0.5 | 0.09368139759 |
+| 70 | 71.234 | 0.9 | 0.2031788887 |
+| 120 | 120.3855 | 1.3 | 0.2260192835 |
+
+To measure ranging time, I recorded the time in milliseconds between when the measurement is taken and just after the data is ready. Through this I found a ranging time of ~50ms.
 
 ### Using 2 Sensors
 8. Using notes from the pre-lab, hook up both ToF sensors simultaneously and demonstrate that both work.
