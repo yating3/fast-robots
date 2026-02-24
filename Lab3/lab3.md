@@ -27,23 +27,19 @@ Serial monitor output:
 
 ### Sensor Modes
 
-Short mode: An advantage of it is that is has better ambient immunity than other modes. This means that it . A tradeoff of short mode is that it has a maximum distance of that is % shorter than medium and % shorter than long. 
+Each sensing mode has a different maximum distance that they can detect obstacles. A longer distance means that the robot can see further and plan ahead. This is useful for large spaces where obstacles may be far away. Long mode has the longest distance at 4m. Medium is close behind at 3m. Short mode has a significantly shorter maximum distance of 1.3m that is 130% shorter than medium and 200% shorter than long. An advantage of short mode is that is has much better ambient light immunity. This means that it can work reliably under different lighting conditions. Bright lights negatively affect medium/long mode more than short mode which is barely effected. Another consideration is the timing budget. Short mode has the shortest minimum of 20ms, while long mode has the longest minimum of 140ms. This means that short mode will have a faster sampling rate making it more precise. I chose to use short mode because it's the best fit for my robot. This is a fast moving robot so accuracy and precision are priorities. Additionally, I want it to be able to perform well regardless of lighting. I don't think the shorter detection distance will be an issue since it will be moving through a relatively small area.
 
-Medium mode: A benefit of medium mode is the maximum distance of 3m. 
-
-Long mode: A benefit of medium mode is the maximum distance of 3m. 
-
-Short mode distance readings:
+Short mode distance readings using Example1_ReadDistance:
 
 <img src="lab3_read_dist.png" width="500" class="left">
 
-7. Test your chosen mode
-- Use the “..\Arduino\libraries\SparkFun_VL53L1X_4m_Laser_Distance_Sensor\examples\Example1_ReadDistance” example
 - Document your ToF sensor range, accuracy, repeatability, and ranging time
-- The figure below is an example from 2020, when students measured the accuracy and repeatability in different lighting conditions, and timing for various code setups (these are not all required tasks for this year), however, we highly recommend generating your plots in the Jupyter notebook to gain more familiarity with the environment, e.g. using matplotlib.
 
 8. Using notes from the pre-lab, hook up both ToF sensors simultaneously and demonstrate that both work.
 - Don’t use the Example05_wire code to do this, it works poorly when multiple sensors are attached.
+
+All sensors connected:
+
 <img src="lab3_setup.png" width="600" class="left">
 
 (2 ToF sensors and the IMU: Discussion and screenshot/video of sensors working in parallel)
