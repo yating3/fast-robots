@@ -21,7 +21,7 @@ Example05_wire_I2C scans the I2C channel to find the sensor. The address doesn't
 
 Serial monitor output:
 
-<img src="lab3_i2c_addr.png" width="600" class="center">
+<img src="lab3_i2c_addr.png" width="600" class="center-image">
 
 ## Lab Tasks
 
