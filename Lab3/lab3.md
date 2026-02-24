@@ -38,7 +38,7 @@ In order to power the Artemis, I soldered a 750 mAh battery to the Artemis using
 - Browse through the code to see how to use i2c commands.
 - Run the code. Does the address match what you expected? If not, explain why.
 
-The address doesn't match what I initially expected. According to the ToF datasheet it uses a device address of 0x52, but the serial monitor displayed 0x29 when I ran the Example05_wire_I2C code. 0x52 is 01010010 in binary. 0x29 is 00101001 in binary. 
+The address doesn't match what I initially expected. According to the ToF datasheet it uses a device address of 0x52, but the serial monitor displayed 0x29 when I ran the Example05_wire_I2C code. 0x52 is 01010010 in binary. 0x29 is 00101001 in binary. 0x29 is 0x52 shifted right by one. The last binary digit of 0x52 is 0 indicating that the Artemis is writing to the sensor.
  
 (Screenshot of Artemis scanning for I2C device (and discussion on I2C address))
 
@@ -49,8 +49,6 @@ Short mode: An advantage of it is that is has better ambient immunity than other
 Medium mode: A benefit of medium mode is the maximum distance of 3m. 
 
 Long mode: A benefit of medium mode is the maximum distance of 3m. 
-
-<pre> .setDistanceModeShort(); //1.3m .setDistanceModeMedium(); //3m .setDistanceModeLong(); //4m, Default </pre>
 
 (Discussion and pictures of sensor data with chosen mode)
 
