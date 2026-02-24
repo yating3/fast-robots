@@ -2,47 +2,30 @@
 
 # Lab 3: ToF
 
-The purpose of this lab is to wire and test time of flight sensors. The robot uses these 2 ToF sensors to detect distance.
+The purpose of this lab is to attach and test time of flight sensors. The robot uses 2 VL53L1X ToF sensors to detect distance.
 
-## Wiring
+## Set Up
 
-Before lab, I created a wiring diagram since I'll be cutting and soldering wires in this lab. I chose to use the longer wires for the ToF sensors so that I would have more flexibility with the placement. I used the shorter wires for the Artemis and IMU since they can be placed anywhere. I decided to place one sensor on the front and one sensor on the left side. I will miss obstacles on the left and behind the robot. This will make it more challenging for the robot to move backwards and avoid obstacles when turning left. I believe the front sensor will be used the most because the robot is usually moving forward. I used black for ground, red for power, blue for SDA, and yellow for SCL because this is standard.
+### Design
 
-## Example Code
+Before lab, I planned out the arrangement of components on my car and created a wiring diagram since I'll be permanently cutting and soldering wires. I chose to use the longer wires for the ToF sensors so that I would have more flexibility with the placement. I used the shorter wires for the Artemis and IMU since placement is less important. I decided to place one sensor on the front and one sensor on the right side. I will miss obstacles on the left and behind the robot. This will make it more challenging for the robot to move backwards and avoid obstacles when turning left. The front sensor will be used the most because the robot is usually moving forward. 
 
-- Note the I2C sensor address
+### Wiring
+I used black for ground, red for power, blue for SDA, and yellow for SCL because this is standard. I used a white wire to connect xShut of one ToF sensor to pin 8 of the Artemis which enabled me to shut the sensor off and set the address of the other one. This allows me to use both simultaneously. I connected the 2 ToF sensors and the IMU to the Artemis using the QWIIC breakout board. I cut one end of the QWIIC connect cables in order to solder them to the ToF sensors. In order to power the Artemis, I soldered a JST connector to the 750 mAh LIPO battery so it could be plugged into the board. I then put heat shrink over the exposed wires to isolate them and avoid shorting the battery. 
 
-- Briefly discuss the approach to using 2 ToF sensors
+<img src="lab3_wiring.png" width="400" class="left">
 
-In order to use 2 ToF sensors, I wired the xShut pin to pin 8 of the Artemis. 
+### I2C Channel
 
-- Briefly discuss placement of sensors on robot and scenarios where you will miss obstacles
+Example05_wire_I2C scans the I2C channel to find the sensor. The address doesn't match what I initially expected. According to the ToF datasheet, it uses a device address of 0x52, but the serial monitor displayed 0x29 when I ran Example05_wire_I2C. 0x52 is 01010010 in binary. 0x29 is 00101001 in binary. 0x29 is 0x52 shifted right by one. The last binary digit of 0x52 is the read/write bit. It's 0 in this case indicating that the Artemis is writing to the sensor.
 
+Serial monitor output:
 
-I connected the 2 ToF sensors and the IMU to the Artemis using the QWIIC breakout board. I cut one end of the QWIIC connect cables in order to solder them to the ToF sensors.
-
-(wiring diagram)
+<img src="lab3_i2c_addr.png" width="400" class="left">
 
 ## Lab Tasks
 
-### Set up
-In order to power the Artemis, I soldered a 750 mAh battery to the Artemis using a JST connector. I then put heat shrink over the exposed wire to isolate it in order to avoid shorting it. 
-
-
-(Picture of your ToF sensor connected to your QWIIC breakout board)
-
-4. Connect the first ToF sensor to the QWIIC breakout board.
-
-5. Scan the I2C channel to find the sensor
-- Go to File->Examples->Apollo3->Wire and open Example05_wire_I2C
-- Browse through the code to see how to use i2c commands.
-- Run the code. Does the address match what you expected? If not, explain why.
-
-The address doesn't match what I initially expected. According to the ToF datasheet it uses a device address of 0x52, but the serial monitor displayed 0x29 when I ran the Example05_wire_I2C code. 0x52 is 01010010 in binary. 0x29 is 00101001 in binary. 0x29 is 0x52 shifted right by one. The last binary digit of 0x52 is 0 indicating that the Artemis is writing to the sensor.
- 
-(Screenshot of Artemis scanning for I2C device (and discussion on I2C address))
-
-6. The ToF sensor has three modes (Short, Medium, and Long) that optimize the ranging performance given the maximum expected range. Discuss the pros/cons of each mode, and think about which one could work on the final robot. (Note: medium mode is only available with the Polulu VL53L1X Library).
+### Sensor Modes
 
 Short mode: An advantage of it is that is has better ambient immunity than other modes. This means that it . A tradeoff of short mode is that it has a maximum distance of that is % shorter than medium and % shorter than long. 
 
@@ -50,7 +33,9 @@ Medium mode: A benefit of medium mode is the maximum distance of 3m.
 
 Long mode: A benefit of medium mode is the maximum distance of 3m. 
 
-(Discussion and pictures of sensor data with chosen mode)
+Short mode distance readings:
+
+<img src="lab3_read_dist.png" width="400" class="left">
 
 7. Test your chosen mode
 - Use the “..\Arduino\libraries\SparkFun_VL53L1X_4m_Laser_Distance_Sensor\examples\Example1_ReadDistance” example
@@ -59,6 +44,7 @@ Long mode: A benefit of medium mode is the maximum distance of 3m.
 
 8. Using notes from the pre-lab, hook up both ToF sensors simultaneously and demonstrate that both work.
 - Don’t use the Example05_wire code to do this, it works poorly when multiple sensors are attached.
+<img src="lab3_setup.png" width="400" class="left">
 
 (2 ToF sensors and the IMU: Discussion and screenshot/video of sensors working in parallel)
 
