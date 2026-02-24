@@ -38,11 +38,17 @@ In order to power the Artemis, I soldered a 750 mAh battery to the Artemis using
 - Browse through the code to see how to use i2c commands.
 - Run the code. Does the address match what you expected? If not, explain why.
 
-The address doesn't match what I initially expected. According to the ToF datasheet it uses a device address of 0x52, but the serial monitor displayed 0x29 when I ran the Example05_wire_I2C code. 
+The address doesn't match what I initially expected. According to the ToF datasheet it uses a device address of 0x52, but the serial monitor displayed 0x29 when I ran the Example05_wire_I2C code. 0x52 is 01010010 in binary. 0x29 is 00101001 in binary. 
  
 (Screenshot of Artemis scanning for I2C device (and discussion on I2C address))
 
 6. The ToF sensor has three modes (Short, Medium, and Long) that optimize the ranging performance given the maximum expected range. Discuss the pros/cons of each mode, and think about which one could work on the final robot. (Note: medium mode is only available with the Polulu VL53L1X Library).
+
+Short mode: An advantage of it is that is has better ambient immunity than other modes. This means that it . A tradeoff of short mode is that it has a maximum distance of that is % shorter than medium and % shorter than long. 
+
+Medium mode: A benefit of medium mode is the maximum distance of 3m. 
+
+Long mode: A benefit of medium mode is the maximum distance of 3m. 
 
 <pre> .setDistanceModeShort(); //1.3m .setDistanceModeMedium(); //3m .setDistanceModeLong(); //4m, Default </pre>
 
