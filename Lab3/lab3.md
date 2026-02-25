@@ -47,7 +47,7 @@ Measured vs. Actual Distance Graph:
 
 To measure repeatibility I recorded 200 data points for 30cm, 70cm, and 120cm. The sensor produces consistent results with little deviation at all these distances. It performed the best at 30cm which makes sense because it's using short range mode.
 
-| Actual Distance (cm) | Median | Range | Standard Deviation |
+| Actual Distance (cm) | Median (Measured) | Range (Measured) | Standard Deviation (Measured) |
 | --- | --- | --- | --- |
 | 30 | 29.3325 | 0.5 | 0.09368139759 |
 | 70 | 71.234 | 0.9 | 0.2031788887 |
