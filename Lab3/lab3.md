@@ -73,11 +73,47 @@ Code for shutting down sensor 1 and changing sensor 2 address:
 
 I was able to collect data from both sensors simultaneously. The readings of each sensor were completely independent of the other. 
 
-<img src="lab3_2sensor.png" width="600" class="center">
+<img src="lab3_2sensor.png" width="800" class="center">
 
-9. In future labs, it is essential that the code executes quickly, therefore you cannot let your code hang while it waits for the sensor to finish a measurement. Write a piece of code that prints the Artemis clock to the Serial as fast as possible, continuously, and prints new ToF sensor data from both sensors only when available.
-- The distanceSensor.checkForDataReady() routine can be called to check when new data is available.
-- How fast does your loop execute, and what is the current limiting factor?
+### Measurement Speed
+
+Loop for collecting and printing data:
+
+```
+void loop(void)
+{
+  Serial.print(millis());
+  Serial.print(" ");
+  distanceSensor.startRanging(); //Write configuration bytes to initiate measurement
+  distanceSensor2.startRanging();
+
+  if (distanceSensor.checkForDataReady()) {
+    distance = distanceSensor.getDistance();
+    Serial.println();
+    Serial.print("Sensor 1: ");
+    Serial.print(distance);
+    Serial.println();
+    distanceSensor.clearInterrupt();
+    distanceSensor.stopRanging();
+  }
+
+  if (distanceSensor2.checkForDataReady()) {
+    distance2 = distanceSensor2.getDistance();
+    Serial.println();
+    Serial.print("Sensor 2: ");
+    Serial.print(distance2);
+    Serial.println();
+    distanceSensor2.clearInterrupt();
+    distanceSensor2.stopRanging();
+  }
+}
+```
+
+Results:
+
+<img src="lab3_loopspeed.png" width="800" class="center">
+
+When sensor data isn't available, the loop executes in 5ms. When there is sensor 1 data available, the loop executes in 7ms. When there is sensor 2 data available, the loop executes in 8ms. When there is both data available, the loop executes in 11ms. The current limiting factor is the rate that the ToF sensor can collect data. It's slower than the Artemis clock.
 
 (Tof sensor speed: Discussion on speed and limiting factor; include code snippet of how you do this)
 
