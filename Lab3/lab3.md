@@ -79,7 +79,7 @@ I was able to collect data from both sensors simultaneously. The readings of eac
 
 ### Measurement Speed
 
-I wrote code that continuously prints the time (seperated by spaces) and checks if data is avaialable. It prints the sensor data when it's ready.
+I wrote code that continuously prints the time (seperated by spaces) and checks if data is available. It prints the sensor data when it's ready.
 
 Loop for collecting and printing data:
 
