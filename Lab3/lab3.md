@@ -56,8 +56,8 @@ To measure repeatibility I recorded 200 data points for 30cm, 70cm, and 120cm. T
 To measure ranging time, I recorded the time in milliseconds between when the measurement is taken and just after the data is ready. Through this I found a ranging time of ~50ms.
 
 ### Using 2 Sensors
-8. Using notes from the pre-lab, hook up both ToF sensors simultaneously and demonstrate that both work.
-- Don’t use the Example05_wire code to do this, it works poorly when multiple sensors are attached.
+
+After testing one ToF, I added the second ToF and IMU. I had to change the address of one ToF sensor because both sensors have the same default address. If they both have the same I2C address, they will respond at the same time causing a data collision.
 
 All sensors connected:
 
@@ -65,7 +65,7 @@ All sensors connected:
 
 (2 ToF sensors and the IMU: Discussion and screenshot/video of sensors working in parallel)
 
-Shutting down sensor 1 and changing sensor 2 address:
+Code for shutting down sensor 1 and changing sensor 2 address:
 
 ```
   pinMode(SHUTDOWN_PIN, OUTPUT);
