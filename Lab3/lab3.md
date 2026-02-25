@@ -53,7 +53,7 @@ To measure repeatibility I recorded 200 data points for 30cm, 70cm, and 120cm. T
 | 70 | 71.234 | 0.9 | 0.2031788887 |
 | 120 | 120.3855 | 1.3 | 0.2260192835 |
 
-To measure ranging time, I recorded the time in milliseconds between when the measurement is taken and just after the data is ready. Through this I found a ranging time of ~50ms.
+To measure ranging time, I recorded the time in milliseconds between when the measurement is taken and just after the data is ready. Through this I found a ranging time of 29ms.
 
 ### Using 2 Sensors
 
@@ -63,8 +63,6 @@ All sensors connected:
 
 <img src="lab3_setup.png" width="600" class="center">
 
-(2 ToF sensors and the IMU: Discussion and screenshot/video of sensors working in parallel)
-
 Code for shutting down sensor 1 and changing sensor 2 address:
 
 ```
@@ -72,6 +70,10 @@ Code for shutting down sensor 1 and changing sensor 2 address:
   digitalWrite(SHUTDOWN_PIN, LOW); // shut down sensor 1
   distanceSensor.setI2CAddress(0x54); // change sensor 2 address
 ```
+
+I was able to collect data from both sensors simultaneously. The readings of each sensor were completely independent of the other. 
+
+<img src="lab3_2sensor.png" width="600" class="center">
 
 9. In future labs, it is essential that the code executes quickly, therefore you cannot let your code hang while it waits for the sensor to finish a measurement. Write a piece of code that prints the Artemis clock to the Serial as fast as possible, continuously, and prints new ToF sensor data from both sensors only when available.
 - The distanceSensor.checkForDataReady() routine can be called to check when new data is available.
