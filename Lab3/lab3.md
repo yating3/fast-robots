@@ -11,7 +11,7 @@ The purpose of this lab is to attach and test time of flight sensors. The robot 
 Before lab, I planned out the arrangement of components on my car and created a wiring diagram since I'll be permanently cutting and soldering wires. I chose to use the longer wires for the ToF sensors so that I would have more flexibility with the placement. I used the shorter wires for the Artemis and IMU since placement is less important. I decided to place one sensor on the front and one sensor on the right side. I will miss obstacles on the left and behind the robot. This will make it more challenging for the robot to move backwards and avoid obstacles when turning left. The front sensor will be used the most because the robot is usually moving forward. 
 
 ### Wiring
-I used black for ground, red for power, blue for SDA, and yellow for SCL because this is standard. I used a white wire to connect xShut of one ToF sensor to pin 8 of the Artemis which enabled me to shut the sensor off and set the address of the other one. This allows me to use both simultaneously. I connected the 2 ToF sensors and the IMU to the Artemis using the QWIIC breakout board. I cut one end of the QWIIC connect cables in order to solder them to the ToF sensors. In order to power the Artemis, I soldered a JST connector to the 750 mAh LIPO battery so it could be plugged into the board. I then put heat shrink over the exposed wires to isolate them and avoid shorting the battery. 
+I used black for ground, red for power, blue for SDA, and yellow for SCL because this is standard. I used a white wire to connect xShut of one ToF sensor to pin 8 of the Artemis which enabled me to shut the sensor off and set the address of the other one. This allows me to use both simultaneously. I connected the 2 ToF sensors and the IMU to the Artemis using the QWIIC breakout board. I cut one end of the QWIIC connect cables in order to solder them to the ToF sensors. In order to power the Artemis, I soldered a JST connector to the 750 mAh LIPO battery so it could be plugged into the board. I then put heat shrink over the exposed wires to isolate them and avoid shorting the battery. Using the battery, I was able to successfully send BLE messages between my laptop and the Artemis.
 
 <img src="lab3_wiring.png" width="600" class="center">
 
@@ -27,7 +27,7 @@ Serial monitor output:
 
 ### Sensor Modes
 
-Each sensing mode has a different maximum distance that they can detect obstacles. A longer distance means that the robot can see further and plan ahead. This is useful for large spaces where obstacles may be far away. Long mode has the longest distance at 4m. Medium is close behind at 3m. Short mode has a significantly shorter maximum distance of 1.3m that is 130% shorter than medium and 200% shorter than long. An advantage of short mode is that is has much better ambient light immunity. This means that it can work reliably under different lighting conditions. Bright lights negatively affect medium/long mode more than short mode which is barely effected. Another consideration is the timing budget. Short mode has the shortest minimum of 20ms, while long mode has the longest minimum of 140ms. This means that short mode will have a faster sampling rate making it more precise. I chose to use short mode because it's the best fit for my robot. This is a fast moving robot so accuracy and precision are priorities. Additionally, I want it to be able to perform well regardless of lighting. I don't think the shorter detection distance will be an issue since it will be moving around a relatively small area.
+Each sensing mode has a different maximum distance that they can detect obstacles. A longer distance means that the robot can see further and plan ahead. This is useful for large spaces where obstacles may be far away. Long mode has the longest distance at 4m. Medium is close behind at 3m. Short mode has a significantly shorter maximum distance of 1.3m that is 130% shorter than medium and 200% shorter than long. An advantage of short mode is that is has much better ambient light immunity. This means that it can work reliably under different lighting conditions. Bright lights negatively affect medium/long mode more than short mode which is barely effected. Another consideration is the timing budget. Short mode has the shortest minimum of 20ms, while long mode has the longest minimum of 140ms. This means that short mode can have a faster sampling rate, making it more precise. I chose to use short mode because it's the best fit for my robot. This is a fast moving robot so accuracy and precision are priorities. Additionally, I want it to be able to perform well regardless of lighting. I don't think the shorter detection distance will be an issue since it will be moving around a relatively small area.
 
 Short mode distance readings using Example1_ReadDistance:
 
@@ -77,6 +77,8 @@ I was able to collect data from both sensors simultaneously. The readings of eac
 
 ### Measurement Speed
 
+I wrote code that continuously prints the time (seperated by spaces) and checks if data is avaialable. It prints the sensor data when it's ready.
+
 Loop for collecting and printing data:
 
 ```
@@ -111,16 +113,19 @@ void loop(void)
 
 Results:
 
-<img src="lab3_loopspeed.png" width="800" class="center">
+<img src="lab3_loopspeed.png" width="600" class="center">
 
 When sensor data isn't available, the loop executes in 5ms. When there is sensor 1 data available, the loop executes in 7ms. When there is sensor 2 data available, the loop executes in 8ms. When there is both data available, the loop executes in 11ms. The current limiting factor is the rate that the ToF sensor can collect data. It's slower than the Artemis clock.
 
-(Tof sensor speed: Discussion on speed and limiting factor; include code snippet of how you do this)
+### Data Over Bluetooth
 
-10. Finally, edit your work from Lab 1, such that you can record time-stamped ToF data and IMU data for a set period of time, and then send it over Bluetooth to your computer.
+I wrote 2 new commands in ble_arduino.ino: BLE_TOF and BLE_IMU for recording and sending 10000ms of BLE and IMU data. I then received the data using a notification handler in jupyter. I decided to use a notification handler because it automatically collects, prints, and stores the data in arrays. 
 
-11. Include a plot of the ToF data against time.
-(Time v Distance: Include graph of data sent over bluetooth (2 sensors))
+Plot of ToF data vs. time:
 
-12. Include a plot of the IMU data against time.
-(Time v Angle: Include graph of data sent over bluetooth)
+<img src="lab3_tof_time.png" width="600" class="center">
+
+Plot of IMU data vs. time:
+
+<img src="lab3_imu_time.png" width="600" class="center">
+
