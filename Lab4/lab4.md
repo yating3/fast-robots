@@ -2,17 +2,26 @@
 
 # Lab 4: Motors and Open Loop Control
 
+The purpose of this lab is to add and test motor drivers. The robot uses 2 parallel-coupled DRV8833 dual motor drivers.
+
+## Set Up
 Note that to deliver enough current for our robot to be fast, we will parallel-couple the two inputs and outputs on each dual motor driver, essentially using two channels to drive each motor. This means that we can deliver twice the average current without overheating the chip. While it is a bad idea to parallel couple motor drivers from separate ICs because their timing might differ slightly, you can often do it when both motor drivers exist on the same chip with the same clock circuitry.
 In your lab write-up, discuss/show how you decide to hook up/place the motor drivers.
 
-- What pins will you use for control on the Artemis? (It is worth considering both pin functionality and physical placement on the board/car).
 - We ask you to power the Artemis and the motor drivers/motors from separate batteries. Why is that?
-- Consider routing paths given EMI, wire lengths, and color coding. Long wires may not fit in the chassis, and lead to unnecessary noise. Wires that are too short, will make repair harder. Using solid-core wire can cause problems when the car undergoes high accelerations.
+- Consider routing paths given EMI, wire lengths, and color coding. Long wires may not fit in the chassis, and lead to unnecessary noise. Wires that are too short, will make repair harder.
+
+I'm connecting the motor driver input pins to A2, A3, A14, and A15 on the Artemis. I chose these pins because they are PWM enabled. According to the datasheet, pins 8 and 10 can't be used for PWM. Additionally, these pins are closer to the end of the Artemis which will be placed horizontally in the back slot of the car. I will have the usb port exposed to make it easier to upload code. The Artemis and motor driver/motor are powered from separate batteries to avoid damaging the Artemis and reduce EMI.  
+
+I used 
 
 
+Wiring Diagram:
 [Diagram with your intended connections between the motor drivers, Artemis, and battery (with specific pin numbers)]
 
 [Battery discussion]
+
+## Lab Tasks
 
 1. Connect the necessary power and signal inputs to one dual motor driver (where inputs/outputs are hooked up in parallel as discussed in lecture) from the Artemis.
 - For now, keep the motor driver (VIN) powered from an external power supply with a controllable current limit; this will make debugging easier.
@@ -20,6 +29,27 @@ In your lab write-up, discuss/show how you decide to hook up/place the motor dri
 
 [Picture of your setup with power supply and oscilloscope hookup]
 [Power supply setting discussion]
+
+### One Motor Driver
+
+```
+#define MD1_IN1 2
+#define MD1_IN2 3
+
+void setup() {
+  pinMode(IN1,OUTPUT);
+  pinMode(IN2,OUTPUT);
+}
+void loop() {
+  analogWrite(IN1,100); 
+  analogWrite(IN2,0);
+  delay(1000)
+  analogWrite(IN1,50); 
+  analogWrite(IN2,0);
+}
+```
+
+### Two Motor Drivers
 
 2. Use analogWrite commands to generate PWM signals and show (using an oscilloscope) that you can regulate the power on the motor driver output.
 
