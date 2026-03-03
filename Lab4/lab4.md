@@ -17,7 +17,8 @@ I used
 
 
 Wiring Diagram:
-[Diagram with your intended connections between the motor drivers, Artemis, and battery (with specific pin numbers)]
+
+<img src="lab4_wiring.png" width="600" class="center">
 
 [Battery discussion]
 
@@ -27,10 +28,20 @@ Wiring Diagram:
 - For now, keep the motor driver (VIN) powered from an external power supply with a controllable current limit; this will make debugging easier.
 - What are reasonable settings for the power supply?
 
+Before soldering the battery wires to the motor drivers, I tested them using an external DC power supply. I set the voltage to 3.7V 
+
 [Picture of your setup with power supply and oscilloscope hookup]
 [Power supply setting discussion]
 
 ### One Motor Driver
+
+Oscilloscope reading PWM output for one motor driver:
+
+<img src="lab4_osc1.png" width="600" class="center">
+
+Power Supply:
+
+<img src="lab4_power.png" width="600" class="center">
 
 ```
 #define MD1_IN1 2
@@ -50,6 +61,14 @@ void loop() {
 ```
 
 ### Two Motor Drivers
+
+```
+
+```
+
+Oscilloscope reading PWM output for both motor drivers:
+
+<img src="lab4_osc2.png" width="600" class="center">
 
 2. Use analogWrite commands to generate PWM signals and show (using an oscilloscope) that you can regulate the power on the motor driver output.
 
