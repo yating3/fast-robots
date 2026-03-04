@@ -28,16 +28,23 @@ Wiring Diagram:
 - For now, keep the motor driver (VIN) powered from an external power supply with a controllable current limit; this will make debugging easier.
 - What are reasonable settings for the power supply?
 
-Before soldering the battery wires to the motor drivers, I tested them using an external DC power supply. I set the voltage to 3.7V 
+Before soldering the battery and motors to motor driver #1, I tested that it was able to receive PWM signals sent through the Artemis. 
+
+them using an external DC power supply and . I set the voltage to 3.7V 
 
 [Picture of your setup with power supply and oscilloscope hookup]
 [Power supply setting discussion]
 
 ### One Motor Driver
 
+
 Oscilloscope reading PWM output for one motor driver:
 
 <img src="lab4_osc1.png" width="600" class="center">
+
+Setup:
+
+<img src="lab4_osc1_setup.png" width="600" class="center">
 
 Power Supply:
 
