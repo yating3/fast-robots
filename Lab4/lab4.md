@@ -98,18 +98,87 @@ Oscilloscope reading PWM output for both motor drivers:
 6. Repeat the process for the second motor and motor driver. One 850mAh battery should be enough to power both motors.
 
 7. Install everything inside your car chassis, and try running the car on the ground.
-- Remember, the car may flip, so try to avoid having components that stick out beyond the wheels.
-- Also, the car is very fast, so test it in the hallway and add a timer in code so that it stops automatically after a short amount of time. That way you don’t have to try to catch it when it gets away from you!
-- Here is an example of a car with everything hooked up (note that we did not use QWIIC connectors in this one). Remember that the implementation details are entirely up to you.
 
 [Picture of all the components secured in the car. Consider labeling your picture if you can’t see all the components]
 
 8. Explore the lower limit in PWM value for which the robot moves forward and on-axis turns while on the ground; note it may require slightly more power to start from rest compared to when it is running.
 
-[Lower limit PWM value discussion]
+The lower limit in PWM is 40 for moving forward and 110 for on-axis turns. I found these values by sending commands over bluetooth and increasing the PWM in increments of 5. My battery was about half charged when I tested this. I would be able to achieve lower values with a fully charged battery. I noticed that there was significant friction between the wheels and the floor because the wheels spun much faster when I lifted up the car. 
+
+Car moving forward for 3 seconds then turning for 5 seconds:
+<video width="480" height="310" controls loop="" muted="" autoplay="">
+    <source src="https://github.com/yating3/fast-robots/blob/8e2505b8d7adae21cb53254107f1e2c35018363b/Lab4/lab4_lower_pwm.mov" />
+</video>
+
+Code for Arduino commands:
+
+```
+        case FORWARD:   
+          int fw_pwm;
+
+          success = robot_cmd.get_next_value(fw_pwm);
+          if (!success)
+              return;
+
+          analogWrite(LEFT_BW, 0);
+          analogWrite(RIGHT_BW, 0);
+          analogWrite(LEFT_FW, fw_pwm);
+          analogWrite(RIGHT_FW, fw_pwm);
+          break;
+
+        case BACKWARD:   
+          int bw_pwm;
+
+          success = robot_cmd.get_next_value(bw_pwm);
+          if (!success)
+              return;
+
+          analogWrite(LEFT_BW, bw_pwm);
+          analogWrite(RIGHT_BW, bw_pwm);
+          analogWrite(LEFT_FW, 0);
+          analogWrite(RIGHT_FW, 0);
+          break;
+
+        case BRAKE:   
+          analogWrite(LEFT_BW, 255);
+          analogWrite(RIGHT_BW, 255);
+          analogWrite(LEFT_FW, 255);
+          analogWrite(RIGHT_FW, 255); 
+
+          break;
+
+        case TURN:   
+          int turn_pwm;
+          int dir;
+
+          success = robot_cmd.get_next_value(turn_pwm);
+          if (!success)
+              return;
+
+          success = robot_cmd.get_next_value(dir);
+          if (!success)
+              return;
+          
+          if (dir == 0) {
+            analogWrite(LEFT_BW, 0);
+            analogWrite(RIGHT_BW, turn_pwm);
+            analogWrite(LEFT_FW, turn_pwm);
+            analogWrite(RIGHT_FW, 0); 
+          }
+
+          if (dir == 1) {
+            analogWrite(LEFT_BW, turn_pwm);
+            analogWrite(RIGHT_BW, 0);
+            analogWrite(LEFT_FW, 0);
+            analogWrite(RIGHT_FW, turn_pwm); 
+          }
+
+          break;
+```
+
+### Calibration Factor
 
 9. If your motors do not spin at the same rate, you will need to implement a calibration factor. To demonstrate that your robot can move in a fairly straight line, record a video of your robot following a straight line (e.g. a piece of tape) for at least 2m/6ft.
-- It may be helpful to note that each of the vinyl tiles in the lab is 1-by-1 foot.
 - The robot should start centered on the line, and still partially overlap with the line at the end.
 
 [Calibration demonstration (discussion, video, code, pictures as needed)]
