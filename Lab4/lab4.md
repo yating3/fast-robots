@@ -107,7 +107,7 @@ The lower limit in PWM is 40 for moving forward and 110 for on-axis turns. I fou
 
 Car moving forward for 3 seconds then turning for 5 seconds:
 <video width="480" height="310" controls loop="" muted="" autoplay="">
-    <source src="https://github.com/yating3/fast-robots/raw/refs/heads/main/Lab1/lab4_lower_pwm.mov" />
+    <source src="https://github.com/yating3/fast-robots/raw/refs/heads/main/Lab4/lab4_lower_pwm.mov" />
 </video>
 
 Code for Arduino commands:
