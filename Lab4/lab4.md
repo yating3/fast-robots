@@ -93,7 +93,7 @@ void loop() {
 
 ### Two Motor Drivers
 
-I repeated the process for motor driver #2.
+I repeated the process for motor driver #2. I sent PWM values of 128 (50% duty cycle) and 64 (25% duty cycle) to motor driver #1 and #2 respectively. 
 
 Code for sending 2 PWM signals:
 ```
@@ -109,122 +109,105 @@ Oscilloscope reading PWM output for both motor drivers:
 
 <img src="lab4_osc2.png" width="600" class="center">
 
+### Assemble Car
 
-[Include the code snippet for your analogWrite code that tests the motor drivers]
-[Image of your oscilloscope]
+I removed the control PCB that came with the car and connected the motor and battery wires to my board. I then installed all the components including my TOF sensors and IMU in the car chassis. This allowed me to power the car with the 850mAh battery. 
 
-3. Take your car apart!
-- Locate and unmount the control PCB and cut wires to the motors and the battery connector as close to the board as possible.
+<img src="lab4_assembled.png" width="600" class="center">
 
-4. Place your car on its side, such that the spinning wheels are elevated, and show that you can run the motor in both directions.
-- Keep the motor driver powered on an external power supply for now, but remember to connect all grounds in your circuit.
+### PWM Lower Limit
 
-<video width="480" height="310" controls loop="" muted="" autoplay="">
-    <source src="https://github.com/yating3/fast-robots/raw/refs/heads/main/Lab4/lab4_lower_pwm.mov" />
-</video>
-
-Input signal code snippet:
-```
-
-```
-
-5. Power the motor driver from the 850mAh battery instead of the power supply (double check color codes before you plug it in), and make sure your code works when the circuit is fully battery powered.
-
-[Short video of both wheels spinning (with battery driving the motor drivers)]
-
-6. Repeat the process for the second motor and motor driver. One 850mAh battery should be enough to power both motors.
-
-7. Install everything inside your car chassis, and try running the car on the ground.
-
-[Picture of all the components secured in the car. Consider labeling your picture if you can’t see all the components]
-
-8. Explore the lower limit in PWM value for which the robot moves forward and on-axis turns while on the ground; note it may require slightly more power to start from rest compared to when it is running.
-
-The lower limit in PWM is 40 for moving forward and 110 for on-axis turns. I found these values by sending commands over bluetooth and increasing the PWM in increments of 5. My battery was about half charged when I tested this. I would be able to achieve lower values with a fully charged battery. I noticed that there was significant friction between the wheels and the floor because the wheels spun much faster when I lifted up the car. 
+The lower limit in PWM is 40 for moving forward and 110 for on-axis turns. I found these values by sending commands over bluetooth and increasing the PWM in increments of 10. My battery was partially charged when I tested this. I would be able to achieve lower values with a fully charged battery. I noticed that there was significant friction between the wheels and the floor because the wheels spun much faster when I lifted up the car. 
 
 Car moving forward for 3 seconds then turning for 5 seconds:
 <video width="480" height="310" controls loop="" muted="" autoplay="">
     <source src="https://github.com/yating3/fast-robots/raw/refs/heads/main/Lab4/lab4_lower_pwm.mov" />
 </video>
 
+Bluetooth commands:
+```
+ble.send_command(CMD.FORWARD, "50")
+time.sleep(3)
+ble.send_command(CMD.TURN, "130|0")
+time.sleep(5)
+ble.send_command(CMD.BRAKE, "")
+```
+
 Code for Arduino commands:
 
 ```
-        case FORWARD:   
-          int fw_pwm;
+case FORWARD:   
+int fw_pwm;
 
-          success = robot_cmd.get_next_value(fw_pwm);
-          if (!success)
-              return;
+success = robot_cmd.get_next_value(fw_pwm);
+if (!success)
+    return;
 
-          analogWrite(LEFT_BW, 0);
-          analogWrite(RIGHT_BW, 0);
-          analogWrite(LEFT_FW, fw_pwm);
-          analogWrite(RIGHT_FW, fw_pwm);
-          break;
+analogWrite(LEFT_BW, 0);
+analogWrite(RIGHT_BW, 0);
+analogWrite(LEFT_FW, fw_pwm);
+analogWrite(RIGHT_FW, fw_pwm);
+break;
 
-        case BACKWARD:   
-          int bw_pwm;
+case BACKWARD:   
+int bw_pwm;
 
-          success = robot_cmd.get_next_value(bw_pwm);
-          if (!success)
-              return;
+success = robot_cmd.get_next_value(bw_pwm);
+if (!success)
+    return;
 
-          analogWrite(LEFT_BW, bw_pwm);
-          analogWrite(RIGHT_BW, bw_pwm);
-          analogWrite(LEFT_FW, 0);
-          analogWrite(RIGHT_FW, 0);
-          break;
+analogWrite(LEFT_BW, bw_pwm);
+analogWrite(RIGHT_BW, bw_pwm);
+analogWrite(LEFT_FW, 0);
+analogWrite(RIGHT_FW, 0);
+break;
 
-        case BRAKE:   
-          analogWrite(LEFT_BW, 255);
-          analogWrite(RIGHT_BW, 255);
-          analogWrite(LEFT_FW, 255);
-          analogWrite(RIGHT_FW, 255); 
+case BRAKE:   
+analogWrite(LEFT_BW, 255);
+analogWrite(RIGHT_BW, 255);
+analogWrite(LEFT_FW, 255);
+analogWrite(RIGHT_FW, 255); 
 
-          break;
+break;
 
-        case TURN:   
-          int turn_pwm;
-          int dir;
+case TURN:   
+int turn_pwm;
+int dir;
 
-          success = robot_cmd.get_next_value(turn_pwm);
-          if (!success)
-              return;
+success = robot_cmd.get_next_value(turn_pwm);
+if (!success)
+    return;
 
-          success = robot_cmd.get_next_value(dir);
-          if (!success)
-              return;
-          
-          if (dir == 0) {
-            analogWrite(LEFT_BW, 0);
-            analogWrite(RIGHT_BW, turn_pwm);
-            analogWrite(LEFT_FW, turn_pwm);
-            analogWrite(RIGHT_FW, 0); 
-          }
+success = robot_cmd.get_next_value(dir);
+if (!success)
+    return;
 
-          if (dir == 1) {
-            analogWrite(LEFT_BW, turn_pwm);
-            analogWrite(RIGHT_BW, 0);
-            analogWrite(LEFT_FW, 0);
-            analogWrite(RIGHT_FW, turn_pwm); 
-          }
+if (dir == 0) {
+  analogWrite(LEFT_BW, 0);
+  analogWrite(RIGHT_BW, turn_pwm);
+  analogWrite(LEFT_FW, turn_pwm);
+  analogWrite(RIGHT_FW, 0); 
+}
 
-          break;
+if (dir == 1) {
+  analogWrite(LEFT_BW, turn_pwm);
+  analogWrite(RIGHT_BW, 0);
+  analogWrite(LEFT_FW, 0);
+  analogWrite(RIGHT_FW, turn_pwm); 
+}
+
+break;
 ```
 
 ### Calibration Factor
 
-9. If your motors do not spin at the same rate, you will need to implement a calibration factor. To demonstrate that your robot can move in a fairly straight line, record a video of your robot following a straight line (e.g. a piece of tape) for at least 2m/6ft.
-- The robot should start centered on the line, and still partially overlap with the line at the end.
-
-Since my left wheel spun faster than my right wheel, I needed to implement a calibration factor in order to get the car to drive straight. I also noticed that the speed difference was greater at lower pwm values. The photo below shows the starting and ending position for PWM values of 50 and 100. There is more drift for 50. The calibration may require additional adjustments in the future depending on the car speed.
+Since my left wheel spun faster than my right wheel, I needed to implement a calibration factor in order to get the car to drive straight. I drove the car for about 7 feet to see how close it was. I noticed that the speed difference was greater at lower pwm values. The photo below shows the starting and ending position for PWM values of 50 and 100. There is more drift for 50. The calibration may require additional adjustments in the future depending on the car speed.
 
 Before Calibration:
 
 <img src="lab4_before_calib.png" width="600" class="center">
 
-I decided to multiply the right PWM value by a calibration factor. I found the scaling values experimentally by slowly incrementing them until the car was able to drive straight. I determined that I should multiply the right PWM value by 1.1.
+To implement this, I need to multiply the right PWM value by a calibration factor. I found the scaling values experimentally by slowly incrementing them until the car was able to drive straight. I determined that I should multiply the right PWM value by 1.1.
 
 After Calibration:
 <video width="480" height="310" controls loop="" muted="" autoplay="">
@@ -251,6 +234,15 @@ if (drive_dir == 1) {
 }
 ```
 
-10. Demonstrate open loop, untethered control of your robot - add in some turns.
+### Open Loop
 
-[Open loop code and video]
+Code:
+
+```
+
+```
+
+Video of open loop control:
+<video width="480" height="310" controls loop="" muted="" autoplay="">
+    <source src="https://github.com/yating3/fast-robots/raw/refs/heads/main/Lab4/lab4_open_loop.mov" />
+</video>
