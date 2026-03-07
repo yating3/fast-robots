@@ -236,13 +236,29 @@ if (drive_dir == 1) {
 
 ### Open Loop
 
-Code:
+I was able to send commands and move the car over bluetooth.
+
+Bluetooth commands:
 
 ```
-
+ble.send_command(CMD.DRIVE, "80|0")
+time.sleep(1)
+ble.send_command(CMD.TURN, "140|0")
+time.sleep(2)
+ble.send_command(CMD.DRIVE, "80|0")
+time.sleep(1)
+ble.send_command(CMD.TURN, "140|1")
+time.sleep(2)
+ble.send_command(CMD.DRIVE, "80|0")
+time.sleep(1)
+ble.send_command(CMD.BRAKE, "")
 ```
 
 Video of open loop control:
 <video width="480" height="310" controls loop="" muted="" autoplay="">
     <source src="https://github.com/yating3/fast-robots/raw/refs/heads/main/Lab4/lab4_open_loop.mov" />
 </video>
+
+### Acknowledgements
+
+I referenced Aidan McNay's website to ensure that my wiring and results were correct.
