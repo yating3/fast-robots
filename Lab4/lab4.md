@@ -19,7 +19,7 @@ Wiring Diagram:
 
 ### One Motor Driver
 
-Before soldering the battery and motors to motor driver #1, I tested that it was able to receive PWM signals sent through the Artemis. I used an external DC power supply and an oscilloscope to read the signal output. I set the power supply voltage to 3.7V because this matches the battery that I will be using. It's also in the range of what the motor driver accepts. I sent a PWM value of 128 which corresponds to a ~50% duty cycle which is reflected by my output reading. 
+Before soldering the battery and motors to motor driver #1, I tested that it was able to receive PWM signals sent through the Artemis. I used an external DC power supply and an oscilloscope to read the signal output. I set the power supply voltage to 3.7V because this matches the battery that I will be using. It's also in the range of what the motor driver accepts. I sent a PWM value of 128 which corresponds to a ~50% duty cycle which is reflected by my output reading. The voltage output is 3.7V as expected.
 
 Oscilloscope reading PWM output for one motor driver:
 
@@ -49,7 +49,51 @@ void loop() {
 }
 ```
 
+After confirming that I was receiving the PWM signals, I connected the motors. While still running on an external power supply, I sent PWM values to spin the wheel backwards and forwards at different speeds. I also renamed the variables of the motor driver pins for clarity.
+
+Wheel spinning: 
+<video width="480" height="310" controls loop="" muted="" autoplay="">
+    <source src="https://github.com/yating3/fast-robots/raw/refs/heads/main/Lab4/lab4_wheel_spin.mov" />
+</video>
+
+Code for spinning the wheel:
+```
+void loop() {
+  // forward fast
+  Serial.println("fw");
+  analogWrite(LEFT_BW,150); 
+  analogWrite(LEFT_FW,0);
+  delay(2000);
+
+  // forward slow
+  Serial.println("fw slow");
+  analogWrite(LEFT_BW,50); 
+  analogWrite(LEFT_FW,0);
+  delay(2000);
+
+  // backward fast
+  Serial.println("bw");
+  analogWrite(LEFT_BW,0); 
+  analogWrite(LEFT_FW,150);
+  delay(2000);
+
+  // backward slow
+  Serial.println("bw slow");
+  analogWrite(LEFT_BW,0); 
+  analogWrite(LEFT_FW,50);
+  delay(2000);
+
+  // brake
+  Serial.println("brake");
+  analogWrite(LEFT_BW,255); 
+  analogWrite(LEFT_FW,255);
+  delay(5000);
+}
+```
+
 ### Two Motor Drivers
+
+I repeated the process for motor driver #2.
 
 Code for sending 2 PWM signals:
 ```
@@ -65,13 +109,11 @@ Oscilloscope reading PWM output for both motor drivers:
 
 <img src="lab4_osc2.png" width="600" class="center">
 
-2. Use analogWrite commands to generate PWM signals and show (using an oscilloscope) that you can regulate the power on the motor driver output.
 
 [Include the code snippet for your analogWrite code that tests the motor drivers]
 [Image of your oscilloscope]
 
 3. Take your car apart!
-- Unscrew and remove the top (blue) shell from your car. You may have to cut the wires for the chassis LEDs (we will not be using them in this class). Don’t lose the screws!!
 - Locate and unmount the control PCB and cut wires to the motors and the battery connector as close to the board as possible.
 
 4. Place your car on its side, such that the spinning wheels are elevated, and show that you can run the motor in both directions.
