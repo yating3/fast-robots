@@ -5,38 +5,21 @@
 The purpose of this lab is to add and test motor drivers. The robot uses 2 parallel-coupled DRV8833 dual motor drivers.
 
 ## Set Up
-Note that to deliver enough current for our robot to be fast, we will parallel-couple the two inputs and outputs on each dual motor driver, essentially using two channels to drive each motor. This means that we can deliver twice the average current without overheating the chip. While it is a bad idea to parallel couple motor drivers from separate ICs because their timing might differ slightly, you can often do it when both motor drivers exist on the same chip with the same clock circuitry.
-In your lab write-up, discuss/show how you decide to hook up/place the motor drivers.
 
-- We ask you to power the Artemis and the motor drivers/motors from separate batteries. Why is that?
-- Consider routing paths given EMI, wire lengths, and color coding. Long wires may not fit in the chassis, and lead to unnecessary noise. Wires that are too short, will make repair harder.
 
-I'm connecting the motor driver input pins to A2, A3, A14, and A15 on the Artemis. I chose these pins because they are PWM enabled. According to the datasheet, pins 8 and 10 can't be used for PWM. Additionally, these pins are closer to the end of the Artemis which will be placed horizontally in the back slot of the car. I will have the usb port exposed to make it easier to upload code. The Artemis and motor driver/motor are powered from separate batteries to avoid damaging the Artemis and reduce EMI.  
+I parallel-coupled the inputs and outputs of each dual motor driver in order to deliver twice as much current. I'm connecting the motor driver input pins to A2, A3, A14, and A15 on the Artemis. I chose these pins because they are PWM enabled. According to the datasheet, pins 8 and 10 can't be used for PWM. Additionally, these pins are closer to the end of the Artemis which will be placed in the back slot of the car. I will have the usb port exposed to make it easier to upload code. I used standard wire colors: black for ground, red for power, blue/yellow for data. This made it easy to follow. I kept my wires short and twisted them to avoid EMI interference. This allowed everything to fit neatly as well. 
 
-I used 
-
+The Artemis and motor driver/motor are powered from separate batteries to avoid damaging the Artemis and reduce EMI. The motors can draw a lot of current, especially when starting up, which could cause the Artemis to malfunction or break.
 
 Wiring Diagram:
 
-<img src="lab4_wiring.png" width="600" class="center">
-
-[Battery discussion]
+<img src="lab4_wiring.png" width="700" class="center">
 
 ## Lab Tasks
 
-1. Connect the necessary power and signal inputs to one dual motor driver (where inputs/outputs are hooked up in parallel as discussed in lecture) from the Artemis.
-- For now, keep the motor driver (VIN) powered from an external power supply with a controllable current limit; this will make debugging easier.
-- What are reasonable settings for the power supply?
-
-Before soldering the battery and motors to motor driver #1, I tested that it was able to receive PWM signals sent through the Artemis. 
-
-them using an external DC power supply and . I set the voltage to 3.7V 
-
-[Picture of your setup with power supply and oscilloscope hookup]
-[Power supply setting discussion]
-
 ### One Motor Driver
 
+Before soldering the battery and motors to motor driver #1, I tested that it was able to receive PWM signals sent through the Artemis. I used an external DC power supply and an oscilloscope to read the signal output. I set the power supply voltage to 3.7V because this matches the battery that I will be using. It's also in the range of what the motor driver accepts. I sent a PWM value of 128 which corresponds to a ~50% duty cycle which is reflected by my output reading. 
 
 Oscilloscope reading PWM output for one motor driver:
 
@@ -50,27 +33,32 @@ Power Supply:
 
 <img src="lab4_power.png" width="600" class="center">
 
+
+Code for sending PWM signal: 
 ```
-#define MD1_IN1 2
-#define MD1_IN2 3
+#define IN1 3
+#define IN2 2
 
 void setup() {
   pinMode(IN1,OUTPUT);
   pinMode(IN2,OUTPUT);
 }
 void loop() {
-  analogWrite(IN1,100); 
-  analogWrite(IN2,0);
-  delay(1000)
-  analogWrite(IN1,50); 
+  analogWrite(IN1,128); 
   analogWrite(IN2,0);
 }
 ```
 
 ### Two Motor Drivers
 
+Code for sending 2 PWM signals:
 ```
-
+void loop() {
+  analogWrite(IN1,128); 
+  analogWrite(IN2,0);
+  analogWrite(IN3,64); 
+  analogWrite(IN4,0);
+}
 ```
 
 Oscilloscope reading PWM output for both motor drivers:
@@ -89,7 +77,14 @@ Oscilloscope reading PWM output for both motor drivers:
 4. Place your car on its side, such that the spinning wheels are elevated, and show that you can run the motor in both directions.
 - Keep the motor driver powered on an external power supply for now, but remember to connect all grounds in your circuit.
 
-[Short video of wheels spinning as expected (including code snippet it’s running on)]
+<video width="480" height="310" controls loop="" muted="" autoplay="">
+    <source src="https://github.com/yating3/fast-robots/raw/refs/heads/main/Lab4/lab4_lower_pwm.mov" />
+</video>
+
+Input signal code snippet:
+```
+
+```
 
 5. Power the motor driver from the 850mAh battery instead of the power supply (double check color codes before you plug it in), and make sure your code works when the circuit is fully battery powered.
 
@@ -181,7 +176,38 @@ Code for Arduino commands:
 9. If your motors do not spin at the same rate, you will need to implement a calibration factor. To demonstrate that your robot can move in a fairly straight line, record a video of your robot following a straight line (e.g. a piece of tape) for at least 2m/6ft.
 - The robot should start centered on the line, and still partially overlap with the line at the end.
 
-[Calibration demonstration (discussion, video, code, pictures as needed)]
+Since my left wheel spun faster than my right wheel, I needed to implement a calibration factor in order to get the car to drive straight. I also noticed that the speed difference was greater at lower pwm values. The photo below shows the starting and ending position for PWM values of 50 and 100. There is more drift for 50. The calibration may require additional adjustments in the future depending on the car speed.
+
+Before Calibration:
+
+<img src="lab4_before_calib.png" width="600" class="center">
+
+I decided to multiply the right PWM value by a calibration factor. I found the scaling values experimentally by slowly incrementing them until the car was able to drive straight. I determined that I should multiply the right PWM value by 1.1.
+
+After Calibration:
+<video width="480" height="310" controls loop="" muted="" autoplay="">
+    <source src="https://github.com/yating3/fast-robots/raw/refs/heads/main/Lab4/lab4_calib.mov" />
+</video>
+
+I combined the forward and backward commands into one drive command to make it easier to calibrate.
+
+Modified Code:
+
+```
+if (drive_dir == 0) {
+  analogWrite(RIGHT_FW, (pwm * cal));
+  analogWrite(LEFT_FW, pwm);
+  analogWrite(RIGHT_BW, 0);
+  analogWrite(LEFT_BW, 0);
+}
+
+if (drive_dir == 1) {
+  analogWrite(RIGHT_BW, (pwm * cal));
+  analogWrite(LEFT_BW, pwm);
+  analogWrite(RIGHT_FW, 0);
+  analogWrite(LEFT_FW, 0);
+}
+```
 
 10. Demonstrate open loop, untethered control of your robot - add in some turns.
 
