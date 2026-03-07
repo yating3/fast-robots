@@ -53,7 +53,7 @@ After confirming that I was receiving the PWM signals, I connected the motors. W
 
 Wheel spinning: 
 <video width="480" height="310" controls loop="" muted="" autoplay="">
-    <source src="https://github.com/yating3/fast-robots/raw/refs/heads/main/Lab4/lab4_wheel_spin.mov" />
+    <source src="https://github.com/yating3/fast-robots/raw/refs/heads/main/Lab4/lab4_wheel_spin.MOV" />
 </video>
 
 Code for spinning the wheel:
@@ -137,66 +137,66 @@ Code for Arduino commands:
 
 ```
 case FORWARD:   
-int fw_pwm;
-
-success = robot_cmd.get_next_value(fw_pwm);
-if (!success)
-    return;
-
-analogWrite(LEFT_BW, 0);
-analogWrite(RIGHT_BW, 0);
-analogWrite(LEFT_FW, fw_pwm);
-analogWrite(RIGHT_FW, fw_pwm);
-break;
+  int fw_pwm;
+  
+  success = robot_cmd.get_next_value(fw_pwm);
+  if (!success)
+      return;
+  
+  analogWrite(LEFT_BW, 0);
+  analogWrite(RIGHT_BW, 0);
+  analogWrite(LEFT_FW, fw_pwm);
+  analogWrite(RIGHT_FW, fw_pwm);
+  break;
 
 case BACKWARD:   
-int bw_pwm;
-
-success = robot_cmd.get_next_value(bw_pwm);
-if (!success)
-    return;
-
-analogWrite(LEFT_BW, bw_pwm);
-analogWrite(RIGHT_BW, bw_pwm);
-analogWrite(LEFT_FW, 0);
-analogWrite(RIGHT_FW, 0);
-break;
-
-case BRAKE:   
-analogWrite(LEFT_BW, 255);
-analogWrite(RIGHT_BW, 255);
-analogWrite(LEFT_FW, 255);
-analogWrite(RIGHT_FW, 255); 
-
-break;
+  int bw_pwm;
+  
+  success = robot_cmd.get_next_value(bw_pwm);
+  if (!success)
+      return;
+  
+  analogWrite(LEFT_BW, bw_pwm);
+  analogWrite(RIGHT_BW, bw_pwm);
+  analogWrite(LEFT_FW, 0);
+  analogWrite(RIGHT_FW, 0);
+  break;
+  
+  case BRAKE:   
+  analogWrite(LEFT_BW, 255);
+  analogWrite(RIGHT_BW, 255);
+  analogWrite(LEFT_FW, 255);
+  analogWrite(RIGHT_FW, 255); 
+  
+  break;
 
 case TURN:   
-int turn_pwm;
-int dir;
-
-success = robot_cmd.get_next_value(turn_pwm);
-if (!success)
-    return;
-
-success = robot_cmd.get_next_value(dir);
-if (!success)
-    return;
-
-if (dir == 0) {
-  analogWrite(LEFT_BW, 0);
-  analogWrite(RIGHT_BW, turn_pwm);
-  analogWrite(LEFT_FW, turn_pwm);
-  analogWrite(RIGHT_FW, 0); 
-}
-
-if (dir == 1) {
-  analogWrite(LEFT_BW, turn_pwm);
-  analogWrite(RIGHT_BW, 0);
-  analogWrite(LEFT_FW, 0);
-  analogWrite(RIGHT_FW, turn_pwm); 
-}
-
-break;
+  int turn_pwm;
+  int dir;
+  
+  success = robot_cmd.get_next_value(turn_pwm);
+  if (!success)
+      return;
+  
+  success = robot_cmd.get_next_value(dir);
+  if (!success)
+      return;
+  
+  if (dir == 0) {
+    analogWrite(LEFT_BW, 0);
+    analogWrite(RIGHT_BW, turn_pwm);
+    analogWrite(LEFT_FW, turn_pwm);
+    analogWrite(RIGHT_FW, 0); 
+  }
+  
+  if (dir == 1) {
+    analogWrite(LEFT_BW, turn_pwm);
+    analogWrite(RIGHT_BW, 0);
+    analogWrite(LEFT_FW, 0);
+    analogWrite(RIGHT_FW, turn_pwm); 
+  }
+  
+  break;
 ```
 
 ### Calibration Factor
@@ -205,7 +205,7 @@ Since my left wheel spun faster than my right wheel, I needed to implement a cal
 
 Before Calibration:
 
-<img src="lab4_before_calib.png" width="600" class="center">
+<img src="lab4_before_calib.png" width="700" class="center">
 
 To implement this, I need to multiply the right PWM value by a calibration factor. I found the scaling values experimentally by slowly incrementing them until the car was able to drive straight. I determined that I should multiply the right PWM value by 1.1.
 
