@@ -145,3 +145,8 @@ Extrapolation code:
         run_pid(305, pid_distance, 1.0);
       }
 ```
+Pushing robot after settling:
+
+<video width="480" height="310" controls loop="" muted="" autoplay="">
+    <source src="https://github.com/yating3/fast-robots/raw/refs/heads/main/Lab5/lab5_push.mov" />
+</video>
