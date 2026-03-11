@@ -108,6 +108,7 @@ I also set the ToF sensor to long mode instead of short mode so that it could de
 I started by tuning kp. Since I was starting about 2000mm from the wall with a PWM value of 180, I set my kp to 0.09. This was too fast and led to significant overshooting in the beginning so I lowered it until the car would overshoot less while still approaching at a fast speed. I landed on a kp of 0.07. 
 
 PWM, Distance, and Error Graphs:
+
 <img src="lab5_p_graphs.png" width="600" class="center">
 
 <video width="480" height="310" controls loop="" muted="" autoplay="">
