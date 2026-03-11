@@ -109,7 +109,7 @@ I started by tuning kp. Since I was starting about 2000mm from the wall with a P
 
 PWM, Distance, and Error Graphs:
 
-<img src="lab5_p_graphs.png" width="600" class="center">
+<img src="lab5_p_graphs.png" width="800" class="center">
 
 <video width="480" height="310" controls loop="" muted="" autoplay="">
     <source src="https://github.com/yating3/fast-robots/raw/refs/heads/main/Lab5/lab5_p.MOV" />
