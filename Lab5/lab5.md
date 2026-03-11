@@ -108,9 +108,11 @@ I also set the ToF sensor to long mode instead of short mode so that it could de
 I started by tuning kp. Since I was starting about 2000mm from the wall with a PWM value of 180, I set my kp to 0.09. This was too fast and led to significant overshooting in the beginning so I lowered it until the car would overshoot less while still approaching at a fast speed. I landed on a kp of 0.07. 
 
 PWM, Distance, and Error Graphs:
-[graphs]
+<img src="lab5_p_graphs.png" width="600" class="center">
 
-[video]
+<video width="480" height="310" controls loop="" muted="" autoplay="">
+    <source src="https://github.com/yating3/fast-robots/raw/refs/heads/main/Lab5/lab5_p.MOV" />
+</video>
 
 After seeing the results of just tuning kp, I didn't think I needed to tune ki and kd. The purpose of ki is to eliminate stead-state error by forcing the car closer to the target distance of 1 foot. I was already getting very close to the desired distance without this. The purpose of kd is to dampen the the response in order to prevent overshoot and reduce oscillation. I found that I didn't have significant oscillations and sufficiently reduced overshoot by lowering my kp value. Since I've implemented the full controller, I have the option of tuning these parameters in the future if necessary. 
 
