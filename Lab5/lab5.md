@@ -116,9 +116,6 @@ PWM, Distance, and Error Graphs:
 
 After seeing the results of just tuning kp, I didn't think I needed to tune ki and kd. The purpose of ki is to eliminate stead-state error by forcing the car closer to the target distance of 1 foot. I was already getting very close to the desired distance without this. The purpose of kd is to dampen the the response in order to prevent overshoot and reduce oscillation. I found that I didn't have significant oscillations and sufficiently reduced overshoot by lowering my kp value. Since I've implemented the full controller, I have the option of tuning these parameters in the future if necessary. 
 
-PWM, Distance, and Error Graphs:
-[graphs]
-
 ### Extrapolation
 
 The frequency that the PID loop runs is limited by the rate at which the ToF sensor returns new data. From my data collection, the time between readings is about 40ms which corresponds to a frequency of 25Hz. In order to run the loop more frequently, we can reuse data points or extrapolate new ToF values.
@@ -127,5 +124,23 @@ To reuse the last saved data point, I created a distance variable to store it in
 
 Next, I interpolated sensor readings. I did this by finding the slope of the last 2 datapoints. 
 
-[graphs]
-[video]
+Extrapolation code:
+```
+      if (pid_started) {
+        distanceSensor.startRanging();
+        if (distanceSensor.checkForDataReady()) {
+          pid_distance = distanceSensor.getDistance();
+          distanceSensor.clearInterrupt();
+          distanceSensor.stopRanging();
+        }
+        else if (pid_i < PID_ARR_SIZE && pid_i >= 2) {
+          float delta_dist = pid_dist_arr[pid_i-1] - pid_dist_arr[pid_i-2];
+          float delta_time = (pid_time_arr[pid_i-1] - pid_time_arr[pid_i-2]) / 1000.0;
+          float slope = delta_dist/delta_time;
+          //float dt = (millis() - pid_time_arr[pid_i-1]) / 1000.0;
+          float last_dist = pid_dist_arr[pid_i-1];
+          pid_distance = last_dist + slope * delta_time;
+        }
+        run_pid(305, pid_distance, 1.0);
+      }
+```
