@@ -85,4 +85,8 @@ Code snippet from loop:
       }
 ```
 
+I landed on a kp value of 6.0.
 
+<video width="480" height="310" controls loop="" muted="" autoplay="">
+    <source src="https://github.com/yating3/fast-robots/raw/refs/heads/main/Lab5/lab6_opid.mov" />
+</video>
