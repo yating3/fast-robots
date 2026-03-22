@@ -6,9 +6,9 @@ The objective of this lab is to implement a Kalman filter in order to perform li
 
 ### Estimate Drag and Momentum
 
-To start, I estimated drag and momentum terms. The derivation of the expression describing the dynamics of the system from the lecture [..] slides is below. The first 2 equations are Newton's 2nd law of motion and the linear force model with a drag term. By setting them equal, you get $\ddot{x}$. 
+To start, I estimated drag and momentum terms. The derivation of the expression describing the dynamics of the system from the lecture [..] slides is below. The first 2 equations are Newton's 2nd law of motion and the linear force model with a drag term. By setting them equal, you get x&#77ddot. 
 
-<img src="lab7_dm_equations.png" width="800" class="center">
+<img src="lab7_dm_equations.png" width="500" class="center">
 
 To build the state space model for your system, you will need to estimate the drag and momentum terms for your A and B matrices. Here, we will do this using a step response. Drive the car towards a wall at a constant imput motor speed while logging motor input values and ToF sensor output.
 
