@@ -6,7 +6,7 @@ The objective of this lab is to implement a Kalman filter in order to perform li
 
 ### Estimate Drag and Momentum
 
-To start, I estimated drag and momentum terms. The derivation of the expression describing the dynamics of the system from the lecture [..] slides is below. The first 2 equations are Newton's 2nd law of motion and the linear force model with a drag term. By setting them equal, you get x&#77ddot. 
+To start, I estimated drag and momentum terms. The derivation of the expression describing the dynamics of the system from the lecture [..] slides is below. The first 2 equations are Newton's 2nd law of motion and the linear force model with a drag term. By setting them equal, you get x&#776;. 
 
 <img src="lab7_dm_equations.png" width="500" class="center">
 
