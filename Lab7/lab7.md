@@ -2,9 +2,14 @@
 
 # Lab 7: Kalman Filter
 
-The objective of this lab is to implement a Kalman filter in order to perform linear PID faster.
+The objective of this lab is to implement a Kalman filter in order to perform linear PID faster. A Kalman filter is an algorithm for estimating and predicting the state of a system that incorporates uncertainty. 
 
-### Drag and Momentum
+### Estimate Drag and Momentum
+
+To start, I estimated drag and momentum terms. The derivation of the expression describing the dynamics of the system from the lecture [..] slides is below. The first 2 equations are Newton's 2nd law of motion and the linear force model with a drag term. By setting them equal, you get $\ddot{x}$. 
+
+<img src="lab7_dm_equations.png" width="800" class="center">
+
 To build the state space model for your system, you will need to estimate the drag and momentum terms for your A and B matrices. Here, we will do this using a step response. Drive the car towards a wall at a constant imput motor speed while logging motor input values and ToF sensor output.
 
 1. Choose your step responce, u(t), to be of similar size to the PWM value you used in Lab 5 (to keep the dynamics similar). Pick something between 50%-100% of the maximum u.. 
