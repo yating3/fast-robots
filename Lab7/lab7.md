@@ -6,9 +6,24 @@ The objective of this lab is to implement a Kalman filter in order to perform li
 
 ### Estimate Drag and Momentum
 
-To start, I estimated drag and momentum terms. The derivation of the expression describing the dynamics of the system from the lecture [..] slides is below. The first 2 equations are Newton's 2nd law of motion and the linear force model with a drag term. By setting them equal, you get x&#776;. 
+To start, I estimated drag and momentum terms. The derivation of the expression describing the dynamics of the system from the lecture slides is below. The first 2 equations are Newton's 2nd law of motion and the linear force model with a drag term. By setting them equal, you get x&#776;. 
 
 <img src="lab7_dm_equations.png" width="500" class="center">
+
+Drag can be determined using constant speed. I found the constant speed by driving the car towards the wall at a constant PWM value. The value I chose was 125 because it's about 70% of my maximum speed of 180. The starting position of the car was about 3 meters away from the wall since I would be driving it very quickly and this distance is within the sensing range of my ToF. I had the robot brake when it was 1 foot away from the wall in order to avoid crashing and damaging it.
+
+I logged the PWM input and ToF sensor outputs by storing them in arrays then sending the data over bluetooth. I received it in Jupyter using a notification handler. I then used the time and distance readings to calculate velocity (dx/dt).
+
+Plots of PWM/Distance/Velocity vs. Time
+<img src="lab7_dm_plots.png" width="500" class="center">
+
+From this I found:
+
+Steady state speed: 2.32 m/s
+90% rise time: 0.55 seconds
+Speed at 90% rise time: 1.87 m/s
+
+Using this data, I found that drag is ... and momentum is ....
 
 To build the state space model for your system, you will need to estimate the drag and momentum terms for your A and B matrices. Here, we will do this using a step response. Drive the car towards a wall at a constant imput motor speed while logging motor input values and ToF sensor output.
 
