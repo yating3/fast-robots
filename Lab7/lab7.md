@@ -10,11 +10,12 @@ To start, I estimated drag and momentum terms. The derivation of the expression 
 
 <img src="lab7_dm_equations.png" width="500" class="center">
 
-Drag can be determined using constant speed. I found the constant speed by driving the car towards the wall at a constant PWM value. The value I chose was 125 because it's about 70% of my maximum speed of 180. The starting position of the car was about 3 meters away from the wall since I would be driving it very quickly and this distance is within the sensing range of my ToF. I had the robot brake when it was 1 foot away from the wall in order to avoid crashing and damaging it.
+Drag can be determined using constant speed. I found the constant speed by driving the car towards the wall at a constant PWM value. The value I chose was 126 because it's 70% of my maximum speed of 180. The PWM couldn't be too high because the robot needed to drive enough distance to reach a steady state speed and the starting distance is limited by the ToF sensing distance. The starting position of my car was about 2 meters away from the wall since I would be driving it very quickly and this distance is within the sensing range for long mode. I had the robot brake when it was 1 foot away from the wall in order to avoid crashing and damaging it.
 
 I logged the PWM input and ToF sensor outputs by storing them in arrays then sending the data over bluetooth. I received it in Jupyter using a notification handler. I then used the time and distance readings to calculate velocity (dx/dt).
 
-Plots of PWM/Distance/Velocity vs. Time
+Plots of PWM/Distance/Velocity vs. Time:
+
 <img src="lab7_dm_plots.png" width="500" class="center">
 
 From this I found:
@@ -24,10 +25,21 @@ Steady state speed: 2.32 m/s
 Speed at 90% rise time: 2.09 m/s
 
 From the equations derived in lecture:
+<img src="lab7_dm_equations2.png" width="500" class="center">
+
 Drag: 1/2.32 = 0.431 kg/s
 Momentum: (-0.431 * 0.85) / ln(1-0.9) = 0.159 kg
 
 ### Initialize Kalman Filter
+I computed the A and B matrices, then discretized then. Delta_t is 0.035 seconds because
+that's the time between readings. The C matrix is 1x2 because there are 2 dimensions in my state space and I'm measuring 1 state (distance). Distance has a positive 1 coefficient because I'm using the ToF distance output. Then, the state vector x is initialized.
+
+For the Kalman filter, I needed to estimate variance for each state variable and sensor input. These values acts as weights that indicate how much I trust my model compared to my ToF distance measurements. Using the following equations from lecture I found sigma_1 and sigma_2.
+
+Sigma_1: 
+Sigma_2:
+
+
 1. Compute the A and B matrix given the terms you found above, and discretize your matrices. Be sure to note the sampling time in your write-up.
 
 Ad = np.eye(n) + Delta_T * A  //n is the dimension of your state space 
