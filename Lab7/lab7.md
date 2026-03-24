@@ -20,18 +20,12 @@ Plots of PWM/Distance/Velocity vs. Time
 From this I found:
 
 Steady state speed: 2.32 m/s
-90% rise time: 0.55 seconds
-Speed at 90% rise time: 1.87 m/s
+90% rise time: 0.85 seconds
+Speed at 90% rise time: 2.09 m/s
 
-Using this data, I found that drag is ... and momentum is ....
-
-To build the state space model for your system, you will need to estimate the drag and momentum terms for your A and B matrices. Here, we will do this using a step response. Drive the car towards a wall at a constant imput motor speed while logging motor input values and ToF sensor output.
-
-1. Choose your step responce, u(t), to be of similar size to the PWM value you used in Lab 5 (to keep the dynamics similar). Pick something between 50%-100% of the maximum u.. 
-2. Make sure your step time is long enough to reach steady state (you likely have to use active braking of the car to avoid crashing into the wall). Make sure to use a piece of foam to avoid hitting the wall and damaging your car.
-3. Show graphs for the TOF sensor output, the (computed) speed, and the motor input. Please ensure that the x-axis is in seconds.
-4. Measure the steady state speed, 90% rise time, and the speed at 90% risetime. Note, this doesn’t have to be 90%, you could also use somewhere between 60-90, but the speed and time must correspond to get an accurate estimate for m.
-5. When sending this data back to your laptop, make sure to save the data in a file so that you can use it even after your Jupyter kernel restarts. Consider writing the data to a CSV file, pickle file, or shelve file.
+From the equations derived in lecture:
+Drag: 1/2.32 = 0.431 kg/s
+Momentum: (-0.431 * 0.85) / ln(1-0.9) = 0.159 kg
 
 ### Initialize Kalman Filter
 1. Compute the A and B matrix given the terms you found above, and discretize your matrices. Be sure to note the sampling time in your write-up.
