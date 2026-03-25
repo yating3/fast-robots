@@ -21,11 +21,15 @@ Plots of PWM/Distance/Velocity vs. Time:
 From this I found:
 
 Steady state speed: 2.32 m/s
+
 90% rise time: 0.85 seconds
+
 Speed at 90% rise time: 2.09 m/s
 
 From the equations derived in lecture:
+
 Drag: 1/2.32 = 0.431 kg/s
+
 Momentum: (-0.431 * 0.85) / ln(1-0.9) = 0.159 kg
 
 ### Initialize Kalman Filter
@@ -53,7 +57,9 @@ x = np.array([[dist_arr[0]],[0]])
 For the Kalman filter, I needed to estimate variance for each state variable and sensor input. These values acts as weights that indicate how much I trust my model compared to my ToF distance measurements. The higher the uncertainty value, the lower my confidence is. Using the equations from lecture I found sigma_1 and sigma_2. For sigma_3, I used a slightly smaller value of 25 mm/s since I trust the ToF readings more than the model. 
 
 Sigma_1: 54 mm/s
+
 Sigma_2: 54 mm/s
+
 Sigma_3: 25 mm/s
 
 Code:
