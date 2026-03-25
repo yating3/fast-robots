@@ -34,24 +34,11 @@ Momentum: (-0.431 * 0.85) / ln(1-0.9) = 0.159 kg
 I computed the A and B matrices, then discretized then. Delta_t is 0.035 seconds because
 that's the time between readings. The C matrix is 1x2 because there are 2 dimensions in my state space and I'm measuring 1 state (distance). Distance has a positive 1 coefficient because I'm using the ToF distance output. Then, the state vector x is initialized.
 
-For the Kalman filter, I needed to estimate variance for each state variable and sensor input. These values acts as weights that indicate how much I trust my model compared to my ToF distance measurements. Using the following equations from lecture I found sigma_1 and sigma_2.
+For the Kalman filter, I needed to estimate variance for each state variable and sensor input. These values acts as weights that indicate how much I trust my model compared to my ToF distance measurements. Using the equations from lecture I found sigma_1 and sigma_2. For sigma_3, I used a slightly smaller value of 40 mm/s since I trust it more.
 
-Sigma_1: 
-Sigma_2:
-
-
-1. Compute the A and B matrix given the terms you found above, and discretize your matrices. Be sure to note the sampling time in your write-up.
-
-Ad = np.eye(n) + Delta_T * A  //n is the dimension of your state space 
-Bd = Delta_t * B
-2. Identify your C matrix. Recall that C is a m x n matrix, where n are the dimensions in your state space, and m are the number of states you actually measure.
-This could look like C=np.array([[-1,0]]), because you measure the negative distance from the wall (state 0).
-3. Initialize your state vector, x, e.g. like this: x = np.array([[-TOF[0]],[0]])
-
-4. For the Kalman Filter to work well, you will need to specify your process noise and sensor noise covariance matrices.
-Try to reason about ballpark numbers for the variance of each state variable and sensor input.
-Recall that their relative values determine how much you trust your model versus your sensor measurements. If the values are set too small, the Kalman Filter will not work, if the values are too big, it will barely respond.
-Recall that the covariance matrices take the approximate following form, depending on the dimension of your system state space and the sensor inputs.
+Sigma_1: 54 mm/s
+Sigma_2: 54 mm/s
+Sigma_3: 25 mm/s
 
 ### Implement and Test Kalman Filter in Jupyter (Python)
 To sanity check your parameters, implement your Kalman Filter in Jupyter first. You can do this using the function in the code below (for ease, variable names follow the convention from the lecture slides).
