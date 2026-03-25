@@ -102,7 +102,48 @@ I was able to achieve a very accurate plot, so I did not need to adjust my value
 
 ### Implement Kalman Filter on Robot
 
-Integrate the Kalman Filter into your Lab 5 PID solution on the Artemis. Before trying to increase the speed of your controller, use your debugging script to verify that your Kalman Filter works as expected. Make sure to remove the linear extrapolation step before doing this. Be sure to demonstrate that your solution works by uploading videos and by plotting corresponding raw and estimated data in the same graph.
+After verifying that my filter works in Jupyter, I implemented it on my robot. The code was very similar to the Python code. 
 
-The following code snippets give helpful hints on how to do matrix operations on the robot:
+Initialization:
+```
+Matrix<2,2> Ad = {1, 0.035, 
+                  0, 0.853};       
 
+Matrix<2,1> Bd = {0, 0.340};  
+
+Matrix<1,2> C = {1,0};      
+Matrix<2,1> x = {0,0};    
+
+Matrix<1> u = {1};  
+
+sigma_1 = 54 //position process noise
+sigma_2 = 54 //velocity process noise
+sigma_3 = 25 //sensor noise
+
+Matrix<2,2> sigma = {625, 0, 
+                     0,   25};
+
+Matrix<2,2> sig_u = {sigma_1*sigma_1, 0, 
+                      0, sigma_2*sigma_2};
+Matrix<1,1> sig_z = {sigma_3*sigma_3}; 
+```
+
+Kalman Filter function:
+
+```
+void kf( Matrix <2,1> &mu, Matrix <2,2> &sigma, Matrix<1,1> u , Matrix<1,1> y) {  
+   Matrix<2,2> sigma_p = Ad * sigma * (~Ad) + sig_u;
+
+   Matrix<1,1> sigma_m = C * sigma_p * (~C) + sig_z;
+
+   Matrix<2,1> kkf_gain = sigma_p * (~C) * Inverse(sigma_m);
+
+   Matrix<1,1> y_m = y - (C * mu_p);
+
+   mu = mu_p + kkf_gain * y_m;
+
+   Matrix<2,2> id = { 1, 0, 
+                      0, 1 };
+   sigma = (id - kkf_gain * C) * sigma_p;
+}
+```
