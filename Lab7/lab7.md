@@ -34,22 +34,71 @@ Momentum: (-0.431 * 0.85) / ln(1-0.9) = 0.159 kg
 I computed the A and B matrices, then discretized then. Delta_t is 0.035 seconds because
 that's the time between readings. The C matrix is 1x2 because there are 2 dimensions in my state space and I'm measuring 1 state (distance). Distance has a positive 1 coefficient because I'm using the ToF distance output. Then, the state vector x is initialized.
 
-For the Kalman filter, I needed to estimate variance for each state variable and sensor input. These values acts as weights that indicate how much I trust my model compared to my ToF distance measurements. Using the equations from lecture I found sigma_1 and sigma_2. For sigma_3, I used a slightly smaller value of 40 mm/s since I trust it more.
+Code:
+```
+d = 0.431 
+m = 0.103
+Delta_t = 0.035
+
+# Compute A and B matrices
+A = np.array([[0,1],[0,-d/m]])
+B = np.array([[0],[1/m]])
+
+# Discretize matrices
+Ad = np.eye(2) + Delta_t * A 
+Bd = Delta_t * B
+
+C = np.array([[1,0]])
+x = np.array([[dist_arr[0]],[0]])
+```
+
+For the Kalman filter, I needed to estimate variance for each state variable and sensor input. These values acts as weights that indicate how much I trust my model compared to my ToF distance measurements. Using the equations from lecture I found sigma_1 and sigma_2. For sigma_3, I used a slightly smaller value of 25 mm/s since I trust the ToF readings more.
 
 Sigma_1: 54 mm/s
 Sigma_2: 54 mm/s
 Sigma_3: 25 mm/s
 
-### Implement and Test Kalman Filter in Jupyter (Python)
-To sanity check your parameters, implement your Kalman Filter in Jupyter first. You can do this using the function in the code below (for ease, variable names follow the convention from the lecture slides).
-- Import timing, ToF, and PWM data from a straight run towards the wall (you should have this data handy from lab 5).
-- You may need to format your data first. For the Kalman Filter to work, you’ll need all input arrays to be of equal length. That means that you might have to interpolate data if for example you have fewer ToF measurements than you have motor input updates. This should also be handy from lab 5.
-- Loop through all of the data, while calling the Kalman Filter.
-- Remember to scale your input from 1 to the actual value of your step size (u/step_size).
-- Plot the Kalman Filter output to demonstrate how well your Kalman Filter estimated the system state.
-- If your Kalman Filter is off, try adjusting the covariance matrices. Discuss how/why you adjust them.
-- Be sure to include a discussion of all the paramters that affect the performace of your filter.
+Code:
+```
+sigma_1 = 54 #position process noise
+sigma_2 = 54 #velocity process noise
+sigma_3 = 25 #sensor noise
 
+sig_u = np.array([[sigma_1**2,0],[0,sigma_2**2]])
+sig_z = np.array([[sigma_3**2]])
+```
+
+### Implement and Test Kalman Filter in Jupyter (Python)
+In order to check that my Kalman filter is working before I implement it on my robot, I tested it in Jupyter. I used the following kf function. I then looped through the distance data and applied it.
+
+```
+def kf(mu,sigma,u,y):
+    mu_p = Ad.dot(mu) + Bd.dot(u) 
+    sigma_p = Ad.dot(sigma.dot(Ad.transpose())) + sig_u
+        
+    sigma_m = C.dot(sigma_p.dot(C.transpose())) + sig_z
+    kkf_gain = sigma_p.dot(C.transpose().dot(np.linalg.inv(sigma_m)))
+
+    y_m = y-C.dot(mu_p)
+    mu = mu_p + kkf_gain.dot(y_m)    
+    sigma=(np.eye(2)-kkf_gain.dot(C)).dot(sigma_p)
+
+    return mu,sigma
+
+sigma = np.array([[25**2, 0],[0, 5**2]]) #initial state uncertainty
+
+kf_arr = []
+
+for i in range(len(time_arr)):
+    x, sigma = kf(x, sigma, 1, dist_arr[i])
+    kf_arr.append(x[0])
+```
+
+Plot:
+
+<img src="lab7_jupyter_plot.png" width="700" class="center">
+
+I was able to achieve a very accurate plot, so I did not need to adjust my values. If my filter didn't fit the data well, I could adjust the covariance values.
 
 ### Implement Kalman Filter on Robot
 
