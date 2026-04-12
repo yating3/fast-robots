@@ -27,6 +27,9 @@ Loop code:
 ```
 
 Car turning on axis:
+<video width="480" height="310" controls loop="" muted="" autoplay="">
+    <source src="https://github.com/yating3/fast-robots/raw/refs/heads/main/Lab9/lab9_mapping.mov" />
+</video>
 
 ## Data Collection
 
