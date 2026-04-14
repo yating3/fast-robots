@@ -70,7 +70,7 @@ I collected data at 4 marked positions in the lab space: (-3,-2), (5,3), (0,3), 
 
 Mapping area:
 
-<img src="lab9_world.png" width="500" class="center">
+<img src="lab9_world.png" width="600" class="center">
 
 ## Polar Coordinates
 
@@ -110,9 +110,9 @@ for c in range(4):
 
 After applying transformations, I produced the following map of the room:
 
-<img src="lab9_scatter.png" width="500" class="center">
+<img src="lab9_scatter.png" width="600" class="center">
 
 I then added lines based on the global coordinates. The lines weren't perfectly straight, but the general shape of the map was very close to the actual arena. This is likely due to slight drift as the robot was turning and ToF noise. The accuracy and resolution of the map is also limited by the number of data points collected and the number of positions data was collected from. 
 
-<img src="lab7_walls.png" width="500" class="center">
+<img src="lab9_walls.png" width="600" class="center">
 
