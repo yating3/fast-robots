@@ -66,15 +66,17 @@ The blue LED blinks after every ToF reading. This was helpful for debugging and 
 
 ## Data Collection
 
-I collected data at 
+I collected data at 4 marked positions in the lab space: (-3,-2), (5,3), (0,3), and (5,-3). The car started facing the negative y direction each time. Starting in the same orientation made it easier to map later.
 
 Mapping area:
-[Picture of world]
+
+<img src="lab9_world.png" width="500" class="center">
 
 ## Polar Coordinates
 
-I used polar coordinate plots to make sure that the readings matched my expectations. 
+I used polar coordinate plots to make sure that the readings matched my expectations. I created a plot after scanning at each position. From the plots, I can see that the ToF has trouble detecting obstacles further than 1000mm.
 
+<img src="lab9_polar.png" width="600" class="center">
 
 ## Transformations
 
@@ -82,8 +84,35 @@ I then used transformation matrices in Jupyter to convert my ToF readings to the
 
 Python code for transformations:
 ```
+x_coord = [-3,5,0,5]
+y_coord = [-2,3,3,-3]
 
+for c in range(4):
+    position_arr = []
+    for i in range(len(time_arr)):
+        P = np.array([
+            [all_dist[c][i] + 80],
+            [0],
+            [1]
+        ])
+
+        theta = -all_yaw[c][i] - np.pi/2
+        
+        T = np.array([
+        [np.cos(theta), -np.sin(theta), x_coord[c]*304.8],
+        [np.sin(theta), np.cos(theta),  y_coord[c]*304.8],
+        [0,              0,             1               ]
+        ])
+        
+        global_P = T @ P
+        position_arr.append(global_P)
 ```
 
+After applying transformations, I produced the following map of the room:
 
+<img src="lab9_scatter.png" width="500" class="center">
+
+I then added lines based on the global coordinates. The lines weren't perfectly straight, but the general shape of the map was very close to the actual arena. This is likely due to slight drift as the robot was turning and ToF noise. The accuracy and resolution of the map is also limited by the number of data points collected and the number of positions data was collected from. 
+
+<img src="lab7_walls.png" width="500" class="center">
 
