@@ -15,10 +15,10 @@ In my Jupyter notebook, I first sent a orientation PIP command to set it in posi
 There were various parameters that I had to tune in order to get the car to turn smoothly, spin on axis, and collect useful data. I manually tuned these paramters by sending  commands with different inputs in Jupyter and observed how the car responded.
 
 Inputs tuned:
-- Kp: Since the car would be making small angle changes, I lowered Kp in order to reduce oscillation and overshooting. I settled on a Kp of .
-- Minimum PWM for PID: The PWM had to be high enough to be the car to turn. It also needed to be adjusted slightly based on the battery level. I tried to run it on a close to full battery as much as possible for consistency. I chose a minimum PWM of .
-- Calibration factor: I needed to multiply my right motor by a calibration factor in order for it to spin at a similar rate to the left motor. This allowed the car to rotate on axis and significantly reduced drift. I chose a value of .
-- Time between turns: The time between turns was determined through experimentation. I slowly increased it until the car was settling. The ideal time was 2 seconds.
+- Kp: Since the car would be making small angle changes, I lowered Kp in order to reduce oscillation and overshooting. I settled on a Kp of 0.005.
+- Minimum PWM for PID: The PWM had to be high enough to be the car to turn. It also needed to be adjusted slightly based on the battery level. I tried to run it on a close to full battery as much as possible for consistency. I chose a minimum PWM of 130.
+- Calibration factor: I needed to multiply my right motor by a calibration factor in order for it to spin at a similar rate to the left motor. This allowed the car to rotate on axis and significantly reduced drift. I chose a value of 1.08.
+- Time between turns: The time between turns was determined through experimentation. I slowly increased it until the car was settling. The ideal time was 1600ms.
 - Angle between turns: I chose 15 degrees as this would give me a accurate scan without taking too much time. I had to balance resolution, battery capacity, and measurement time.
 
 Snippet of loop code:
