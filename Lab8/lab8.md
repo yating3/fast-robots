@@ -6,4 +6,4 @@ In this lab I performed a stunt with my car. I chose to do a drift by driving th
 
 ## Code
 
-There are 2 main movements for this stunt: driving forward and turning 180 degrees. I used the ToF sensors to determine when I was 3 feet from the wall.
+There are 2 main movements for this stunt: driving forward and turning 180 degrees. I used the ToF sensors to determine when the car was 3 feet from the wall.
