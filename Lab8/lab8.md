@@ -14,4 +14,5 @@ Video:
 </video>
 
 Plots:
+
 <img src="lab8_plot1.png" width="600" class="center">
