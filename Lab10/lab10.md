@@ -8,7 +8,7 @@ The goal of this lab is to implement grid localization using Bayes filter. The B
 
 This function computes rotation 1, translation, and rotation 2 based on the odometry motion model. I based it on the following equations derived in lecture:
 
-<img src="lab10_odom.jpeg" width="450" class="left">
+<img src="lab10_odom.png" width="450" class="left">
 
 ```
 def compute_control(cur_pose, prev_pose):
