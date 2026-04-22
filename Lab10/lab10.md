@@ -147,7 +147,7 @@ def update_step():
 
 After implementing the Bayes filter, I tested it using the simulation. The belief (in blue) closely follows the true position (in green). There is still some deviation from the ground truth due to noise. Despite this, it is much more accurate than the odometry model (in red). 
 
-<video width="520" height="200" controls loop="" muted="" autoplay="">
+<video width="630" height="240" controls loop="" muted="" autoplay="">
     <source src="https://github.com/yating3/fast-robots/raw/refs/heads/main/Lab10/lab10_sim.mov" />
 </video>
 
