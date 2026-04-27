@@ -14,7 +14,9 @@ Plotted results:
 
 ## Implementation
 
-Code for performing observation loop on the real robot and recording ToF sensor measurements
+The robot turns 360 degrees on axis in 20 degree increments. This yields 18 sensor readings. The code for turning and recording ToF data is very similar to lab 9 code. Since I was sending data over bluetooth, I had to use async and await. I needed to wait for the scanning to finish and for the data to be sent over. 
+
+Code:
 
 ```
     async def perform_observation_loop(self, rot_vel=120):
@@ -54,22 +56,40 @@ Code for performing observation loop on the real robot and recording ToF sensor 
 
 ## Results 
 
+I tested my implementation by running the update step at 4 marked positions in the lab space. I then plotted the belief and ground truth. 
+
 ### (-3,-2)
 
-<img src="lab11_data1.png" width="600" class="left">
+The belief for this pose was almost exactly the same as the ground truth. This is likely due to it's unique surroundings. The walls almost form a complete box with one corner missing.
+
 <img src="lab11_plot1.png" width="600" class="left">
+
+<img src="lab11_data1.png" width="600" class="left">
 
 ### (5,3)
 
-<img src="lab11_data2.png" width="600" class="left">
+The belief was about a foot off from the ground truth. This could be caused by its proximity to the box obstacle because the belief for (5,-3) was wrong as well. The ToF sensor measurements could also be having trouble with getting a good reading of the walls due to being in long range mode. 
+
 <img src="lab11_plot2.png" width="600" class="left">
+
+<img src="lab11_data2.png" width="600" class="left">
+
 
 ### (0,3)
 
-<img src="lab11_data3.png" width="600" class="left">
+The belief for this pose was almost exactly the same as the ground truth. This is likely due to the fact that there is a distinct corner and pretty open space everywhere else. 
+
 <img src="lab11_plot3.png" width="600" class="left">
+
+<img src="lab11_data3.png" width="600" class="left">
+
 
 ### (5,-3)
 
-<img src="lab11_data4.png" width="600" class="left">
+The belief was about a foot off from the ground truth. It seems to think that it's closer to the corner than it actually is. The distance sensor readings might be shorter than reality. If this is the case, the sensor may have been tilted. It could also be inaccurate for the same reasons as the point at (5,3).
+
 <img src="lab11_plot4.png" width="600" class="left">
+
+<img src="lab11_data4.png" width="600" class="left">
+
+The robot localized at some positions better than others. There are a variety of factors that contributed to this. I also noticed that it tended to have more errors in determining orientation than position. This could be attributed to the car not starting exactly at 0 degrees since I manually positioned it and my error tolerance of 2 for orientation PID. Overall, the real robot performance was fairly accurate.
