@@ -20,4 +20,4 @@ Hi! My name is Yating and I'm a senior studying Electrical and Computer Engineer
 * [Lab 9: Mapping](./Lab9/lab9.md)
 * [Lab 10: Localization (sim)](./Lab10/lab10.md)
 * [Lab 11: Localization (real)](./Lab11/lab11.md)
-* [Lab 12: Planning and Execution](./Lab12/lab12.md)
+* [Lab 12: Inverted Pendulum](./Lab12/lab12.md)
